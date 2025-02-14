@@ -14,3 +14,5 @@
 
 # Executables
 *.out
+
+minilibx-linux/*
