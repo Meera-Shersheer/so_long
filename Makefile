@@ -1,10 +1,10 @@
-SRC= 
+SRC= parse_map.c so_long.c check_map.c
 BNS= 
 
 NAME = so_long
 INC=/usr/include
 CC= cc
-CFLAGS= -Wall -Wextra -Werror -g
+CFLAGS= -Wall -Wextra -Werror -g3
 
 #PATH LIB
 LFTDIR= ./Libft
@@ -18,7 +18,7 @@ OBJ_BNS = $(addprefix $(OBJ_DIR)/, $(BNS:.c=.o))
 all: $(NAME)
 
 $(NAME):| libft $(OBJ_SRC)
-	$(CC) $(CFLAGS) $(OBJ_SRC) -I/usr/include -Imlx_linux -O3 -o $(NAME) -L$(LFTDIR) -lft 
+	$(CC) $(CFLAGS) $(OBJ_SRC) -o $(NAME) -L$(LFTDIR) -lft 
 
 
 
