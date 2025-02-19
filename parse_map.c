@@ -6,7 +6,7 @@
 /*   By: mshershe <mshershe@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/16 02:38:50 by mshershe          #+#    #+#             */
-/*   Updated: 2025/02/17 04:47:12 by mshershe         ###   ########.fr       */
+/*   Updated: 2025/02/18 01:39:56 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,10 +102,24 @@ void    exit_game_2(int code, char **map)
     }
 	if (code == 5)
     {
+        write(2, "Error\n", 6);
+        ft_printf("Invalid path\n");
+        ft_free(map);
+        exit(1);
 	}
     if (code ==6)
 	{
-
+        write(2, "Error\n", 6);
+        perror("MiniLibX initialization failed!\n");
+        ft_free(map);
+        exit(1);
+	}
+    if (code == 7)
+	{
+        write(2, "Error\n", 6);
+        perror("Window creation failed!\n");
+        ft_free(map);
+        exit(1);
 	}
 
 }

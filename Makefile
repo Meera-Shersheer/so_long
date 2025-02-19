@@ -1,4 +1,4 @@
-SRC= parse_map.c so_long.c check_map.c
+SRC= parse_map.c so_long.c check_map.c check_path.c images_handling.c images_handling_2.c
 BNS= 
 
 NAME = so_long
@@ -18,9 +18,7 @@ OBJ_BNS = $(addprefix $(OBJ_DIR)/, $(BNS:.c=.o))
 all: $(NAME)
 
 $(NAME):| libft $(OBJ_SRC)
-	$(CC) $(CFLAGS) $(OBJ_SRC) -o $(NAME) -L$(LFTDIR) -lft 
-
-
+	$(CC) $(CFLAGS) $(OBJ_SRC) -o $(NAME) -L$(LFTDIR) -lft  -Lminilibx-linux -lmlx -lXext -lX11 -Iminilibx-linux
 
 $(OBJ_DIR)/%.o: %.c
 	@mkdir -p $(OBJ_DIR) 
