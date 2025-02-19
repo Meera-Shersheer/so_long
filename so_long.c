@@ -6,7 +6,7 @@
 /*   By: mshershe <mshershe@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 21:15:49 by mshershe          #+#    #+#             */
-/*   Updated: 2025/02/20 00:15:36 by mshershe         ###   ########.fr       */
+/*   Updated: 2025/02/20 01:33:24 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int main(int argc , char **argv)
    		exit_game(6, map);
 	game.win_hight = ft_strlen_d(map) * 80;
 	game.win_width = ft_strlen(*map) * 80;
-	game.win = mlx_new_window(game.mlx,game.win_hight, game.win_width, "so_long");
+	game.win = mlx_new_window(game.mlx,game.win_width, game.win_hight, "so_long");
 	if (!game.win)
 		exit_game(7, map);
 	//render_game(map, &game);
@@ -43,7 +43,7 @@ int main(int argc , char **argv)
 	fill_background(&game,sprites.background, map);
 	draw_map(&game,game.sprite, map);
 	mlx_key_hook(game.win, hooks, &game);
-	//mlx_loop_hook(game.mlx, int (*func)(), void *param);
+	//mlx_loop_hook(game.mlx,  hooks, &game);
 	mlx_loop(game.mlx);
 }
 
@@ -101,10 +101,51 @@ int hooks(int keycode, t_vars *game)
 		free(game->mlx);
         exit(0);
     }
+	if (keycode == XK_Up)
+	{
+		update_map(game->map,keycode,game);
+	}
 	return(0);
 }
 
+void update_map(char **map , int key, t_vars *game)
+{
+	size_t i;
+	size_t j;
 
+	i = 0;
+	j = 0;
+	
+	get_pos(map, 'P' , &i, &j);
+	if (key ==  XK_Up && map[i - 1][j]  != '1')
+	{
+		map[i][j] = '0';
+		map[i - 1][j] = 'P';
+
+	}
+	if (key ==  XK_Right && map[i][j + 1]  != '1')
+	{
+		map[i][j] = '0';
+		map[i][j + 1] = 'P';
+	}
+	if (key ==  XK_Left  && map[i][j + 1]  != '1')
+	{
+		map[i][j] = '0';
+		map[i ][j - 11] = 'P';
+	}
+	if (key ==  XK_Down  && map[i + 1][j]  != '1')
+	{
+		map[i][j] = '0';
+		map[i + 1][j] = 'P';
+	}
+	for (int i = 0;map[i]; i++)
+	{
+		printf("\"%s\"\n",map[i]);
+	}
+	mlx_clear_window(game->mlx, game->win);
+	draw_map(game, game->sprite, map);
+	mlx_do_sync(game->mlx);
+}
 
 
 
@@ -156,12 +197,11 @@ void	draw_map(t_vars *game, t_sprites *sprites, char **map)
 			//img = sprites->background;
 			if(map[x][y] == 'P')
 				img = sprites->player;
-				
 			i = mlx_put_image_to_window(game->mlx, game->win, img->scaled_image\
-				, x * img->scaled_width, y * img->scaled_hight);
+				, y * img->scaled_hight, x * img->scaled_width);
 				if (i == 0)
 				{
-					//printf("HI2");
+					printf("HI2");
 					exit(1);
 				}
 			y++;

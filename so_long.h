@@ -6,7 +6,7 @@
 /*   By: mshershe <mshershe@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/16 02:53:20 by mshershe          #+#    #+#             */
-/*   Updated: 2025/02/19 22:54:04 by mshershe         ###   ########.fr       */
+/*   Updated: 2025/02/20 01:05:26 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,4 +83,5 @@ void	draw_map(t_vars *game, t_sprites *sprites, char **map);
 void load_xpm_image( t_vars	*game ,t_image	*img,char	*filename);
 void sprites_init(t_sprites *sprites ,int scaled_h, int scaled_w, char **map);
 int hooks(int keycode, t_vars *game);
+void update_map(char **map , int key, t_vars *game);
 #endif
