@@ -6,7 +6,7 @@
 /*   By: mshershe <mshershe@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 21:15:49 by mshershe          #+#    #+#             */
-/*   Updated: 2025/02/20 01:33:24 by mshershe         ###   ########.fr       */
+/*   Updated: 2025/02/20 01:58:56 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int main(int argc , char **argv)
 		exit_game(7, map);
 	//render_game(map, &game);
 	load_image(&game, map, game.sprite);
-	fill_background(&game,sprites.background, map);
+	//fill_background(&game,sprites.background, map);
 	draw_map(&game,game.sprite, map);
 	mlx_key_hook(game.win, hooks, &game);
 	//mlx_loop_hook(game.mlx,  hooks, &game);
@@ -101,7 +101,7 @@ int hooks(int keycode, t_vars *game)
 		free(game->mlx);
         exit(0);
     }
-	if (keycode == XK_Up)
+	if (keycode == XK_Up || keycode ==  XK_Right || keycode == XK_Left  || keycode ==  XK_Down)
 	{
 		update_map(game->map,keycode,game);
 	}
@@ -112,39 +112,52 @@ void update_map(char **map , int key, t_vars *game)
 {
 	size_t i;
 	size_t j;
-
+	int moved = 0;
+	
 	i = 0;
 	j = 0;
 	
+	for (int i = 0;map[i]; i++)
+	{
+		printf("\"%s\"\n",map[i]);
+	}
+	printf("\n");
 	get_pos(map, 'P' , &i, &j);
 	if (key ==  XK_Up && map[i - 1][j]  != '1')
 	{
 		map[i][j] = '0';
 		map[i - 1][j] = 'P';
+		moved = 1;
 
 	}
-	if (key ==  XK_Right && map[i][j + 1]  != '1')
+	else if (key ==  XK_Right && map[i][j + 1]  != '1')
 	{
 		map[i][j] = '0';
 		map[i][j + 1] = 'P';
+		moved = 1;
 	}
-	if (key ==  XK_Left  && map[i][j + 1]  != '1')
+	else if (key ==  XK_Left  && map[i][j - 1]  != '1')
 	{
 		map[i][j] = '0';
-		map[i ][j - 11] = 'P';
+		map[i ][j - 1] = 'P';
+		moved = 1;
 	}
-	if (key ==  XK_Down  && map[i + 1][j]  != '1')
+	else if (key ==  XK_Down  && map[i + 1][j]  != '1')
 	{
 		map[i][j] = '0';
 		map[i + 1][j] = 'P';
+		moved = 1;
 	}
 	for (int i = 0;map[i]; i++)
 	{
 		printf("\"%s\"\n",map[i]);
 	}
-	mlx_clear_window(game->mlx, game->win);
-	draw_map(game, game->sprite, map);
-	mlx_do_sync(game->mlx);
+	if (moved)
+	{
+		//mlx_clear_window(game->mlx, game->win);
+		draw_map(game, game->sprite, map);
+		mlx_do_sync(game->mlx);
+	}
 }
 
 
@@ -197,6 +210,11 @@ void	draw_map(t_vars *game, t_sprites *sprites, char **map)
 			//img = sprites->background;
 			if(map[x][y] == 'P')
 				img = sprites->player;
+			if (  (int)y * img->scaled_width > game->win_width || (int)x * img->scaled_hight > game->win_hight)
+				{
+  				  printf("Error: Image coordinates out of bounds!\n");
+    				return;
+				}
 			i = mlx_put_image_to_window(game->mlx, game->win, img->scaled_image\
 				, y * img->scaled_hight, x * img->scaled_width);
 				if (i == 0)

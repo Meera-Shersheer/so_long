@@ -6,7 +6,7 @@
 /*   By: mshershe <mshershe@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 02:38:01 by mshershe          #+#    #+#             */
-/*   Updated: 2025/02/19 22:04:36 by mshershe         ###   ########.fr       */
+/*   Updated: 2025/02/20 01:55:29 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ void	fill_background(t_vars *game, t_image *img, char **map)
 		while (y < ft_strlen(map[x]) )
 		{
 			i = mlx_put_image_to_window(game->mlx, game->win, img->scaled_image\
-				, x * img->scaled_width, y * img->scaled_hight);
+				,  y * img->scaled_hight , x * img->scaled_width);
 				if (i == 0)
 				{
 					//printf("HI2");
