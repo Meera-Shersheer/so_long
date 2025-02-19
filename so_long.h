@@ -6,19 +6,14 @@
 /*   By: mshershe <mshershe@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/16 02:53:20 by mshershe          #+#    #+#             */
-/*   Updated: 2025/02/19 22:12:57 by mshershe         ###   ########.fr       */
+/*   Updated: 2025/02/19 22:54:04 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef SO_LONG_H
 # define SO_LONG_H
 
-typedef struct	s_vars {
-	void	*mlx;
-	void	*win;
-	int	win_hight;
-	int win_width;
-}				t_vars;
+
 
 typedef struct s_image
 {
@@ -41,6 +36,15 @@ typedef struct s_sprites
 	t_image		*collectable;
 	t_image		*player;
 }				t_sprites;
+
+typedef struct	s_vars {
+	void	*mlx;
+	void	*win;
+	int	win_hight;
+	int win_width;
+	t_sprites	*sprite;
+	char	**map;
+}				t_vars;
 
 #include <mlx.h>
 #include <X11/X.h>
