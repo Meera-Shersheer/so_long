@@ -6,7 +6,7 @@
 /*   By: mshershe <mshershe@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 02:38:01 by mshershe          #+#    #+#             */
-/*   Updated: 2025/02/19 06:07:30 by mshershe         ###   ########.fr       */
+/*   Updated: 2025/02/19 22:04:36 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,61 +14,30 @@
 
 void load_image( t_vars	*game , char **map,t_sprites *sprites)
 {
-	t_image	wall;
-	t_image	ground;
-	t_image	background;
-	t_image	collectable;
-	t_image	exit_door;
-	t_image	player;
 	int scaled_hight = 80;
 	int scaled_width = 80;
-	(void)map;
-	// load_xpm_image( game ,char	*filename,int new_hight, int new_width);
-	// load_xpm_image( game ,char	*filename,int new_hight, int new_width);
-	// load_xpm_image( game ,char	*filename,int new_hight, int new_width);
-	// load_xpm_image( t_vars	*game ,char	*filename,int new_hight, int new_width);
-	wall.image = mlx_xpm_file_to_image(game->mlx, "./sprites/wall.xpm", \
-		 &(wall.hight), &(wall.width));
-	if(wall.image == NULL)
-   		exit(1);
-	sprites->wall = &wall;
-	background.image = mlx_xpm_file_to_image(game->mlx, "./sprites/background01.xpm", \
-			&(background.hight), &(background.width));
-	 if(background.image == NULL)
-   		exit(1);
-	sprites->background = &background;
-	collectable.image = mlx_xpm_file_to_image(game->mlx, "./sprites/collectable1.xpm", \
-		&(collectable.hight), &(collectable.width));
- 	if(collectable.image == NULL)
-	   exit(1);
-	sprites->collectable = &collectable;
-	ground.image = mlx_xpm_file_to_image(game->mlx, "./sprites/Grass.xpm", \
-		&(ground.hight), &(ground.width));
-		if (ground.image == NULL)
-   		exit(1);
-	sprites->ground = &ground;
 
-	exit_door.image = mlx_xpm_file_to_image(game->mlx, "./sprites/door/Doors_closed.xpm", \
-	&(exit_door.hight), &(exit_door.width));
-	if(exit_door.image == NULL)
-	   exit(1);
-	sprites->exit = &exit_door;
-	player.image = mlx_xpm_file_to_image(game->mlx, "./sprites/player/player_front_3.xpm", \
-	&(player.hight), &(player.width));
-	if(player.image == NULL)
-	   exit(1);
-	sprites->player = &player;
+	if(!game || !(game->mlx) || !sprites )
+		exit_game(8, map);
+	sprites_init(sprites ,scaled_hight,scaled_width,map);	
+	if(!(sprites->wall) || !(sprites->background) || !(sprites->ground))
+		exit_game(8, map);
+	if(!(sprites->collectable) || !(sprites->exit) || !(sprites->player))
+		exit_game(8, map);
+	load_xpm_image(game ,sprites->background,"./sprites/background01.xpm");	
+	load_xpm_image(game ,sprites->wall,"./sprites/wall.xpm");
+	load_xpm_image(game ,sprites->collectable,"./sprites/collectable1.xpm");
+	load_xpm_image(game ,sprites->ground,"./sprites/Grass.xpm");	
+	load_xpm_image(game ,sprites->exit,"./sprites/door/Doors_closed.xpm");
+	load_xpm_image(game ,sprites->player,"./sprites/player/player_front_3.xpm");
 	resize_image(game , sprites->background, scaled_hight, scaled_width);
 	resize_image(game ,sprites->collectable,scaled_hight,scaled_width);
 	resize_image(game ,sprites->exit,scaled_hight,scaled_width);
 	resize_image(game ,sprites->ground,scaled_hight,scaled_width);
 	resize_image(game ,sprites->player,scaled_hight,scaled_width);
 	resize_image(game ,sprites->wall,scaled_hight,scaled_width);
-
-	fill_background(game,sprites->background, map);
-	draw_map(game, sprites, map);
-
-
+	//fill_background(game,sprites->background, map);
+	//draw_map(game, sprites, map);
 }
 void resize_image(t_vars *game, t_image *img, int new_hight, int new_width)
 {
@@ -77,8 +46,6 @@ void resize_image(t_vars *game, t_image *img, int new_hight, int new_width)
     int orig_x;
 	int orig_y;
 	
-	img->scaled_hight = new_hight;
-	img->scaled_width = new_width;
 	img->addr =(int *) mlx_get_data_addr(img->image, \
 		 &(int){0}, &(int){0}, &(int){0});
 	img->scaled_image = mlx_new_image(game->mlx, \
@@ -99,7 +66,6 @@ void resize_image(t_vars *game, t_image *img, int new_hight, int new_width)
 		}
 		y++;
 	}
-
 }
 
 void	fill_background(t_vars *game, t_image *img, char **map)

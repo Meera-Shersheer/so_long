@@ -6,7 +6,7 @@
 /*   By: mshershe <mshershe@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 21:15:49 by mshershe          #+#    #+#             */
-/*   Updated: 2025/02/19 06:07:07 by mshershe         ###   ########.fr       */
+/*   Updated: 2025/02/19 22:30:37 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,10 +36,34 @@ int main(int argc , char **argv)
 		exit_game(7, map);
 	//render_game(map, &game);	
 	load_image(&game, map, &sprites);
-	//fill_background(&game,sprites.background, map);
-	//draw_map(&game, &sprites, map);
+	fill_background(&game,sprites.background, map);
+	draw_map(&game, &sprites, map);
+	mlx_key_hook(game.win, hooks, &game);
+	//mlx_loop_hook(game.mlx, int (*func)(), void *param);
 	mlx_loop(game.mlx);
 }
+
+int hooks(int keycode, t_vars *game)
+{
+
+    printf("Key pressed: %d\n", keycode);
+    if (keycode == XK_Escape)
+    {
+		//mlx_destroy_image(game->mlx,);
+        mlx_destroy_window(game->mlx, game->win);
+        exit(0);
+    }
+	return(0);
+}
+
+
+
+
+
+
+
+
+
 
 	// for (int i = 0;map[i]; i++)
 	// {

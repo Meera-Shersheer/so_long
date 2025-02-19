@@ -6,7 +6,7 @@
 /*   By: mshershe <mshershe@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/16 02:53:20 by mshershe          #+#    #+#             */
-/*   Updated: 2025/02/19 05:34:37 by mshershe         ###   ########.fr       */
+/*   Updated: 2025/02/19 22:12:57 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ typedef struct s_sprites
 
 #include <mlx.h>
 #include <X11/X.h>
+#include <X11/keysym.h>
 #include <stdlib.h>
 #include <stdio.h>
 #include <unistd.h>
@@ -75,7 +76,7 @@ void load_image( t_vars	*game , char **map,t_sprites *sprites);
 void resize_image(t_vars *game, t_image *img, int new_hight, int new_width);
 void	fill_background(t_vars *game, t_image *img, char **map);
 void	draw_map(t_vars *game, t_sprites *sprites, char **map);
-void load_xpm_image( t_vars	*game , t_image	*img, char	*filename);
-
-
+void load_xpm_image( t_vars	*game ,t_image	*img,char	*filename);
+void sprites_init(t_sprites *sprites ,int scaled_h, int scaled_w, char **map);
+int hooks(int keycode, t_vars *game);
 #endif
