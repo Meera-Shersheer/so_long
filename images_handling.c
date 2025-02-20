@@ -6,7 +6,7 @@
 /*   By: mshershe <mshershe@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 02:38:01 by mshershe          #+#    #+#             */
-/*   Updated: 2025/02/20 04:22:09 by mshershe         ###   ########.fr       */
+/*   Updated: 2025/02/20 09:02:20 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void load_image( t_vars	*game , char **map,t_sprites *sprites)
 {
 	int dim;
 
-	dim = 80;
+	dim = 60;
 	if(!game || !(game->mlx) || !sprites)
 		exit_game(8, map);
 	sprites_init(sprites ,map);

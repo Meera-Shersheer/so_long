@@ -6,7 +6,7 @@
 /*   By: mshershe <mshershe@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 21:15:49 by mshershe          #+#    #+#             */
-/*   Updated: 2025/02/20 06:39:41 by mshershe         ###   ########.fr       */
+/*   Updated: 2025/02/20 09:00:44 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,8 @@ int main(int argc , char **argv)
 	game.mlx = mlx_init();
    	if (!game.mlx) 
    		exit_game(6, map);
-	game.win_hight = ft_strlen_d(map) * 80;
-	game.win_width = ft_strlen(*map) * 80;
+	game.win_hight = ft_strlen_d(map) * 60;
+	game.win_width = ft_strlen(*map) * 60;
 	game.win = mlx_new_window(game.mlx,game.win_width, game.win_hight, "so_long");
 	if (!game.win)
 		exit_game(7, map);
@@ -43,39 +43,50 @@ int main(int argc , char **argv)
 	//fill_background(&game,sprites.background, map);
 	game.sprite->collect = malloc (sizeof(int *));
 	game.sprite->total_c = malloc (sizeof(int *));
-	if (!(game.sprite->collect) || !(game.sprite->total_c))
+	game.sprite->moves = malloc (sizeof(int *));
+	if (!(sprites.collect) || !(sprites.total_c) || !(sprites.moves))
 		exit_game(-1, map);
 	*(game.sprite->collect) = 0;
+	*(game.sprite->moves) = 0;
 	*(game.sprite->total_c) = element_counter(map, 'C');
 	draw_map(&game,game.sprite, map);
 	mlx_key_hook(game.win, hooks, &game);
 	//mlx_loop_hook(game.mlx,  hooks, &game);
+	mlx_hook(game.win, 17, 0, close_window, &game);
 	mlx_loop(game.mlx);
 }
+
+
+
+int close_window(t_vars *game)
+{
+	ft_free(game->map);
+	if (game->sprite)
+	{
+		sprites_destroy(game,game->sprite->background);
+		sprites_destroy(game,game->sprite->wall);
+		sprites_destroy(game,game->sprite->collectable);
+		sprites_destroy(game,game->sprite->door_open);
+		sprites_destroy(game,game->sprite->door_player);
+		sprites_destroy(game,game->sprite->player);
+		sprites_destroy(game,game->sprite->exit);
+		sprites_destroy(game,game->sprite->ground);
+		free(game->sprite->collect);
+		free(game->sprite->total_c);
+		free(game->sprite->moves);
+	}
+	mlx_destroy_window(game->mlx, game->win);
+	mlx_destroy_display(game->mlx);
+	free(game->mlx);
+	exit(0);
+	return (0);
+}
+
 
 int hooks(int key, t_vars *game)
 {
     if (key == XK_Escape)
-    {
-		ft_free(game->map);
-		if (game->sprite)
-        {
-			sprites_destroy(game,game->sprite->background);
-			sprites_destroy(game,game->sprite->wall);
-			sprites_destroy(game,game->sprite->collectable);
-			sprites_destroy(game,game->sprite->door_open);
-			sprites_destroy(game,game->sprite->door_player);
-			sprites_destroy(game,game->sprite->player);
-			sprites_destroy(game,game->sprite->exit);
-			sprites_destroy(game,game->sprite->ground);
-			free(game->sprite->collect);
-			free(game->sprite->total_c);	
-		}
-		mlx_destroy_window(game->mlx, game->win);
-		mlx_destroy_display(game->mlx);
-		free(game->mlx);
-        exit(0);
-    }
+		close_window(game);
 	if (key == XK_Up || key == XK_Right || key == XK_Left || key == XK_Down)
 		update_map(game->map,key,game);
 	if (key == XK_w || key == XK_d || key == XK_a || key == XK_s)
@@ -145,6 +156,7 @@ int move(t_vars *game,int i, int j, int direction)
 		map[i][j] = 'D';
 	else
 		map[i][j] = 'P';
+	(*(game->sprite->moves))++;	
 	return (1);
 } 
 
@@ -170,7 +182,8 @@ void	render_game(char	**map, t_vars	*game)
 
 void	draw_map(t_vars *game, t_sprites *sprites, char **map)
 {
-	//int i;
+	char *str;
+	char *s;
 	size_t x;
 	size_t y;
 	t_image	*img;
@@ -203,14 +216,19 @@ void	draw_map(t_vars *game, t_sprites *sprites, char **map)
 				}
 			 mlx_put_image_to_window(game->mlx, game->win, img->scaled_image\
 				, y * img->scaled_hight, x * img->scaled_width);
-				// if (i != 0)
-				// {
-				// 	printf(" %p		%p		%p		%ld		%ld\n",game->mlx, game->win, img->scaled_image
-				// 		, y * img->scaled_hight, x * img->scaled_width);
-				// 	exit(1);
-				// }
 			y++;
 		}	
 		x++;
-	}	
+	}
+	s = ft_itoa( *(game->sprite->moves));
+	str = ft_strjoin("Moves: " , s);
+	ft_printf("%s\n",str);
+	mlx_string_put(game->mlx, game->win, img->scaled_hight / 2, \
+		 img->scaled_width / 2 ,0x000000, str);	
+	mlx_string_put(game->mlx, game->win, img->scaled_hight/2 + 1, \
+		 img->scaled_width/2, 0x000000, str );	
+	mlx_string_put(game->mlx, game->win, img->scaled_hight/2,  \
+		img->scaled_width/2 + 1, 0x000000, str);
+	free(str);
+	free(s);
 }

@@ -6,7 +6,7 @@
 /*   By: mshershe <mshershe@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/16 02:53:20 by mshershe          #+#    #+#             */
-/*   Updated: 2025/02/20 06:37:04 by mshershe         ###   ########.fr       */
+/*   Updated: 2025/02/20 08:22:41 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ typedef struct s_sprites
 	t_image		*door_open;
 	int			*collect;
 	int			*total_c;
+	int			*moves;
 }				t_sprites;
 
 typedef struct	s_vars {
@@ -88,4 +89,5 @@ int hooks(int keycode, t_vars *game);
 void update_map(char **map , int key, t_vars *game);
 int move(t_vars *game,int i, int j, int direction);
 void sprites_destroy(t_vars *game, t_image *img);
+int close_window(t_vars *game);
 #endif
