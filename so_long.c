@@ -6,7 +6,7 @@
 /*   By: mshershe <mshershe@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 21:15:49 by mshershe          #+#    #+#             */
-/*   Updated: 2025/02/20 06:15:08 by mshershe         ###   ########.fr       */
+/*   Updated: 2025/02/20 06:39:41 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,8 @@ int hooks(int key, t_vars *game)
     }
 	if (key == XK_Up || key == XK_Right || key == XK_Left || key == XK_Down)
 		update_map(game->map,key,game);
+	if (key == XK_w || key == XK_d || key == XK_a || key == XK_s)
+		update_map(game->map,key,game);	
 	return(0);
 }
 
@@ -94,13 +96,13 @@ void update_map(char **map , int key, t_vars *game)
 		get_pos(map, 'D' , &i, &j);
 	if(i >= 0 && j>= 0)
 	{
-		if (key ==  XK_Up && map[i - 1][j]  != '1')
+		if ((key == XK_Up || key == XK_w )&& map[i - 1][j]  != '1')
 			moved = move(game,i, j, 1);
-		else if (key ==  XK_Right && map[i][j + 1]  != '1')
+		else if ((key ==  XK_Right || key == XK_d ) && map[i][j + 1]  != '1')
 			moved = move(game,i, j,0);
-		else if (key ==  XK_Left  && map[i][j - 1]  != '1')
+		else if ((key ==  XK_Left || key == XK_a )  && map[i][j - 1]  != '1')
 			moved = move(game,i, j, 3);
-		else if (key ==  XK_Down  && map[i + 1][j]  != '1')
+		else if ((key == XK_Down || key == XK_s ) && map[i + 1][j]  != '1')
 			moved = move(game,i, j, 2);
 	}
 	if(*(game->sprite->collect) == *(game->sprite->total_c))
