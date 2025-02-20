@@ -6,7 +6,7 @@
 /*   By: mshershe <mshershe@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 21:15:49 by mshershe          #+#    #+#             */
-/*   Updated: 2025/02/20 05:41:32 by mshershe         ###   ########.fr       */
+/*   Updated: 2025/02/20 06:15:08 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,50 +55,21 @@ int main(int argc , char **argv)
 
 int hooks(int key, t_vars *game)
 {
-    printf("Key pressed: %d\n", key);
     if (key == XK_Escape)
     {
-
 		ft_free(game->map);
 		if (game->sprite)
         {
-			if (game->sprite->background)
-			{
-				mlx_destroy_image(game->mlx,game->sprite->background->image);
-				mlx_destroy_image(game->mlx,game->sprite->background->scaled_image);
-				free(game->sprite->background);
-			}		
-				//mlx_destroy_image(game->mlx,game->sprite->background);
-			if (game->sprite->ground)
-			{
-				mlx_destroy_image(game->mlx,game->sprite->ground->image);
-				mlx_destroy_image(game->mlx,game->sprite->ground->scaled_image);
-				free(game->sprite->ground);
-			}
-			if (game->sprite->wall)
-			{
-				mlx_destroy_image(game->mlx,game->sprite->wall->image);
-				mlx_destroy_image(game->mlx,game->sprite->wall->scaled_image);
-				free(game->sprite->wall);
-			}
-			if (game->sprite->exit)
-			{
-				mlx_destroy_image(game->mlx,game->sprite->exit->image);
-				mlx_destroy_image(game->mlx,game->sprite->exit->scaled_image);
-				free(game->sprite->exit);
-			}
-			if (game->sprite->collectable)
-			{	
-				mlx_destroy_image(game->mlx,game->sprite->collectable->image);
-				mlx_destroy_image(game->mlx,game->sprite->collectable->scaled_image);
-				free(game->sprite->collectable);
-			}
-			if (game->sprite->player)
-			{
-					mlx_destroy_image(game->mlx,game->sprite->player->image);
-					mlx_destroy_image(game->mlx,game->sprite->player->scaled_image);
-					free(game->sprite->player);
-			}		
+			sprites_destroy(game,game->sprite->background);
+			sprites_destroy(game,game->sprite->wall);
+			sprites_destroy(game,game->sprite->collectable);
+			sprites_destroy(game,game->sprite->door_open);
+			sprites_destroy(game,game->sprite->door_player);
+			sprites_destroy(game,game->sprite->player);
+			sprites_destroy(game,game->sprite->exit);
+			sprites_destroy(game,game->sprite->ground);
+			free(game->sprite->collect);
+			free(game->sprite->total_c);	
 		}
 		mlx_destroy_window(game->mlx, game->win);
 		mlx_destroy_display(game->mlx);
@@ -106,9 +77,7 @@ int hooks(int key, t_vars *game)
         exit(0);
     }
 	if (key == XK_Up || key == XK_Right || key == XK_Left || key == XK_Down)
-	{
 		update_map(game->map,key,game);
-	}
 	return(0);
 }
 
@@ -120,96 +89,22 @@ void update_map(char **map , int key, t_vars *game)
 	
 	i = 0;
 	j = 0;
-	for (int i = 0;map[i]; i++)
-	{
-		printf("\"%s\"\n",map[i]);
-	}
-	printf("\n");
 	get_pos(map, 'P' , &i, &j);
 	if(i < 0 && j < 0)
-	{
 		get_pos(map, 'D' , &i, &j);
-	}
 	if(i >= 0 && j>= 0)
 	{
 		if (key ==  XK_Up && map[i - 1][j]  != '1')
-		{
-			if(map[i - 1][j]  == 'C')
-				(*(game->sprite->collect))++;
-			if(map[i][j]  == 'D')
-				map[i][j] = 'E';
-			else
-				map[i][j] = '0';		
-			if(map[i - 1][j]  == 'W')
-				exit(1);
-			if(map[i - 1][j]  == 'E')	
-				map[i - 1][j] = 'D';
-			else
-				map[i - 1][j] = 'P';	
-
-			moved = 1;
-		}
+			moved = move(game,i, j, 1);
 		else if (key ==  XK_Right && map[i][j + 1]  != '1')
-		{
-			if(map[i][j + 1] == 'C')
-				(*(game->sprite->collect))++;
-			if(map[i][j]  == 'D')
-				map[i][j] = 'E';
-			else
-				map[i][j] = '0';	
-			if(map[i][j + 1] == 'W')
-				exit(1);
-			if(map[i][j + 1]  == 'E')	
-				map[i][j + 1] = 'D';
-			else
-				map[i][j + 1] = 'P';		
-
-			moved = 1;
-		}
+			moved = move(game,i, j,0);
 		else if (key ==  XK_Left  && map[i][j - 1]  != '1')
-		{
-			if(map[i][j - 1] == 'C')
-				(*(game->sprite->collect))++;
-			if(map[i][j]  == 'D')
-				map[i][j] = 'E';
-			else
-				map[i][j] = '0';	
-			if(map[i][j - 1] == 'W')
-				exit(1);
-			if(map[i ][j - 1] == 'E')	
-				map[i ][j - 1]= 'D';
-			else
-				map[i ][j - 1]= 'P';	
-			moved = 1;
-		}
+			moved = move(game,i, j, 3);
 		else if (key ==  XK_Down  && map[i + 1][j]  != '1')
-		{
-			if(map[i + 1][j]== 'C')
-				(*(game->sprite->collect))++;
-
-				
-			if(map[i][j]  == 'D')
-				map[i][j] = 'E';
-			else
-				map[i][j] = '0';
-				
-				
-			if(map[i + 1][j]== 'W')
-				exit(1);
-			if(map[i + 1][j]  == 'E')	
-				map[i + 1][j] = 'D';
-			else
-				map[i + 1][j] = 'P';	
-			moved = 1;
-		}
-	}
-	for (int i = 0;map[i]; i++)
-	{
-		printf("\"%s\"\n",map[i]);
+			moved = move(game,i, j, 2);
 	}
 	if(*(game->sprite->collect) == *(game->sprite->total_c))
 	{
-		//prinf("%d     %d", *(game->sprite->collect), *(game->sprite->total_c));
 		get_pos(map, 'E' , &i, &j);
 		if(i >= 0 && j>= 0)
 			map[i][j] = 'W';
@@ -223,35 +118,33 @@ void update_map(char **map , int key, t_vars *game)
 }
 
 /*direction :0-> right, 1 -> up, 2->down , 3->left */
-// void move(t_vars *game,int i, int j, int direction)
-// {
-// 	char **map = game->map;
+int move(t_vars *game,int i, int j, int direction)
+{
+	char **map = game->map;
 
-// if(map[i][j]  == 'D')
-// 	map[i][j] = 'E';
-// else
-// 	map[i][j] = '0';	
+	if(map[i][j]  == 'D')
+		map[i][j] = 'E';
+	else
+		map[i][j] = '0';	
 	
-// 	if(direction == 1)
-// 		j++;
-// 	else if(direction == 1)
-// 		j++;
-// 	else if(direction == 1)
-// 		j++;
-// 	else if(direction == 1)
-// 		j++;
-	
-	
-// 	if(map[i - 1][j]  == 'C')
-// 		(*(game->sprite->collect))++;
-	
-// 	if(map[i - 1][j]  == 'W')
-// 		exit(1);
-// 	if(map[i - 1][j]  == 'E')	
-// 		map[i - 1][j] = 'D';
-// 	else
-// 		map[i - 1][j] = 'P';
-// } 
+	if(direction == 0)
+		j++;
+	else if(direction ==1)
+		i--;
+	else if(direction == 2)
+		i++;
+	else if(direction == 3)
+		j--;
+	if(map[i][j]  == 'C')
+		(*(game->sprite->collect))++;	
+	if(map[i][j]  == 'W')
+		exit(1);
+	if(map[i][j]  == 'E')	
+		map[i][j] = 'D';
+	else
+		map[i][j] = 'P';
+	return (1);
+} 
 
 
 
@@ -299,8 +192,6 @@ void	draw_map(t_vars *game, t_sprites *sprites, char **map)
 				img = sprites->door_player;
 			if(map[x][y] == 'W')
 				img = sprites->door_open;	
-			//else 
-			//img = sprites->background;
 			if(map[x][y] == 'P')
 				img = sprites->player;
 			if (  (int)x * img->scaled_width > game->win_hight || (int)y * img->scaled_hight > game->win_width)

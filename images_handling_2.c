@@ -6,7 +6,7 @@
 /*   By: mshershe <mshershe@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 04:02:01 by mshershe          #+#    #+#             */
-/*   Updated: 2025/02/20 03:42:13 by mshershe         ###   ########.fr       */
+/*   Updated: 2025/02/20 06:08:56 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,4 +47,14 @@ void sprites_init(t_sprites *sprites , char **map)
 		exit_game(8, map);
 	if(!(sprites->collectable) || !(sprites->exit) || !(sprites->player))
 		exit_game(8, map);
+}
+
+void sprites_destroy(t_vars *game, t_image *img)
+{
+	if (img)
+	{
+		mlx_destroy_image(game->mlx,img->image);
+		mlx_destroy_image(game->mlx,img->scaled_image);
+		free(img);
+	}
 }
