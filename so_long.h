@@ -6,7 +6,7 @@
 /*   By: mshershe <mshershe@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/16 02:53:20 by mshershe          #+#    #+#             */
-/*   Updated: 2025/02/20 01:05:26 by mshershe         ###   ########.fr       */
+/*   Updated: 2025/02/20 04:39:39 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,10 @@ typedef struct s_sprites
 	t_image		*exit;
 	t_image		*collectable;
 	t_image		*player;
+	t_image		*door_player;
+	t_image		*door_open;
+	int			*collect;
+	int			*total_c;
 }				t_sprites;
 
 typedef struct	s_vars {
@@ -74,14 +78,14 @@ int	element_counter(char	**map, char	element);
 void	floodfill(char **map , int x , int y);
 char	**cpy_matrix(char	**map);
 char	**check_Invalid_path(char	**map);
-void	get_pos(char **map, char element , size_t *i, size_t *j);
+void	get_pos(char **map, char element , int *i, int *j);
 void	render_game(char	**map, t_vars	*game);
 void load_image( t_vars	*game , char **map,t_sprites *sprites);
 void resize_image(t_vars *game, t_image *img, int new_hight, int new_width);
 void	fill_background(t_vars *game, t_image *img, char **map);
 void	draw_map(t_vars *game, t_sprites *sprites, char **map);
-void load_xpm_image( t_vars	*game ,t_image	*img,char	*filename);
-void sprites_init(t_sprites *sprites ,int scaled_h, int scaled_w, char **map);
+void load_xpm_image( t_vars	*game ,t_image	*img,char *filename ,int scaled_d);
+void sprites_init(t_sprites *sprites , char **map);
 int hooks(int keycode, t_vars *game);
 void update_map(char **map , int key, t_vars *game);
 #endif

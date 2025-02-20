@@ -6,7 +6,7 @@
 /*   By: mshershe <mshershe@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 00:10:41 by mshershe          #+#    #+#             */
-/*   Updated: 2025/02/18 01:38:55 by mshershe         ###   ########.fr       */
+/*   Updated: 2025/02/20 04:41:01 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,8 +53,8 @@ char	**cpy_matrix(char	**map)
 char	**check_Invalid_path(char	**map)
 {
 	char	**map_cpy;
-	size_t x;
-	size_t y;
+	int x;
+	int y;
 	
 	y = 0;
 	x = 0;
@@ -75,17 +75,17 @@ char	**check_Invalid_path(char	**map)
 	return (NULL);
 }
 
-void	get_pos(char **map, char element , size_t *i, size_t *j)
+void	get_pos(char **map, char element , int *i, int *j)
 {
 
 	if (map == NULL || *map == NULL || !i || !j)
 		exit_game(-1, NULL);
 	*i = 0;
 	*j = 0;	
-	while(*i < ft_strlen_d(map))
+	while(*i < (int)ft_strlen_d(map))
 	{
 		*j = 0;
-		while (*j < ft_strlen(map[*i]) )
+		while (*j < (int)ft_strlen(map[*i]) )
 		{
 			if (map[*i][*j] == element)
 				return;
@@ -93,4 +93,6 @@ void	get_pos(char **map, char element , size_t *i, size_t *j)
 		}	
 		(*i)++;
 	}
+	*i = -1;
+	*j = -1;	
 }

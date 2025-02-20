@@ -6,7 +6,7 @@
 /*   By: mshershe <mshershe@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 21:15:49 by mshershe          #+#    #+#             */
-/*   Updated: 2025/02/20 01:58:56 by mshershe         ###   ########.fr       */
+/*   Updated: 2025/02/20 05:41:32 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,17 +41,22 @@ int main(int argc , char **argv)
 	//render_game(map, &game);
 	load_image(&game, map, game.sprite);
 	//fill_background(&game,sprites.background, map);
+	game.sprite->collect = malloc (sizeof(int *));
+	game.sprite->total_c = malloc (sizeof(int *));
+	if (!(game.sprite->collect) || !(game.sprite->total_c))
+		exit_game(-1, map);
+	*(game.sprite->collect) = 0;
+	*(game.sprite->total_c) = element_counter(map, 'C');
 	draw_map(&game,game.sprite, map);
 	mlx_key_hook(game.win, hooks, &game);
 	//mlx_loop_hook(game.mlx,  hooks, &game);
 	mlx_loop(game.mlx);
 }
 
-int hooks(int keycode, t_vars *game)
+int hooks(int key, t_vars *game)
 {
-
-    printf("Key pressed: %d\n", keycode);
-    if (keycode == XK_Escape)
+    printf("Key pressed: %d\n", key);
+    if (key == XK_Escape)
     {
 
 		ft_free(game->map);
@@ -93,76 +98,160 @@ int hooks(int keycode, t_vars *game)
 					mlx_destroy_image(game->mlx,game->sprite->player->image);
 					mlx_destroy_image(game->mlx,game->sprite->player->scaled_image);
 					free(game->sprite->player);
-			
-			}		//free(game->sprite);
+			}		
 		}
 		mlx_destroy_window(game->mlx, game->win);
 		mlx_destroy_display(game->mlx);
 		free(game->mlx);
         exit(0);
     }
-	if (keycode == XK_Up || keycode ==  XK_Right || keycode == XK_Left  || keycode ==  XK_Down)
+	if (key == XK_Up || key == XK_Right || key == XK_Left || key == XK_Down)
 	{
-		update_map(game->map,keycode,game);
+		update_map(game->map,key,game);
 	}
 	return(0);
 }
 
 void update_map(char **map , int key, t_vars *game)
 {
-	size_t i;
-	size_t j;
+	int i;
+	int j;
 	int moved = 0;
 	
 	i = 0;
 	j = 0;
-	
 	for (int i = 0;map[i]; i++)
 	{
 		printf("\"%s\"\n",map[i]);
 	}
 	printf("\n");
 	get_pos(map, 'P' , &i, &j);
-	if (key ==  XK_Up && map[i - 1][j]  != '1')
+	if(i < 0 && j < 0)
 	{
-		map[i][j] = '0';
-		map[i - 1][j] = 'P';
-		moved = 1;
+		get_pos(map, 'D' , &i, &j);
+	}
+	if(i >= 0 && j>= 0)
+	{
+		if (key ==  XK_Up && map[i - 1][j]  != '1')
+		{
+			if(map[i - 1][j]  == 'C')
+				(*(game->sprite->collect))++;
+			if(map[i][j]  == 'D')
+				map[i][j] = 'E';
+			else
+				map[i][j] = '0';		
+			if(map[i - 1][j]  == 'W')
+				exit(1);
+			if(map[i - 1][j]  == 'E')	
+				map[i - 1][j] = 'D';
+			else
+				map[i - 1][j] = 'P';	
 
-	}
-	else if (key ==  XK_Right && map[i][j + 1]  != '1')
-	{
-		map[i][j] = '0';
-		map[i][j + 1] = 'P';
-		moved = 1;
-	}
-	else if (key ==  XK_Left  && map[i][j - 1]  != '1')
-	{
-		map[i][j] = '0';
-		map[i ][j - 1] = 'P';
-		moved = 1;
-	}
-	else if (key ==  XK_Down  && map[i + 1][j]  != '1')
-	{
-		map[i][j] = '0';
-		map[i + 1][j] = 'P';
-		moved = 1;
+			moved = 1;
+		}
+		else if (key ==  XK_Right && map[i][j + 1]  != '1')
+		{
+			if(map[i][j + 1] == 'C')
+				(*(game->sprite->collect))++;
+			if(map[i][j]  == 'D')
+				map[i][j] = 'E';
+			else
+				map[i][j] = '0';	
+			if(map[i][j + 1] == 'W')
+				exit(1);
+			if(map[i][j + 1]  == 'E')	
+				map[i][j + 1] = 'D';
+			else
+				map[i][j + 1] = 'P';		
+
+			moved = 1;
+		}
+		else if (key ==  XK_Left  && map[i][j - 1]  != '1')
+		{
+			if(map[i][j - 1] == 'C')
+				(*(game->sprite->collect))++;
+			if(map[i][j]  == 'D')
+				map[i][j] = 'E';
+			else
+				map[i][j] = '0';	
+			if(map[i][j - 1] == 'W')
+				exit(1);
+			if(map[i ][j - 1] == 'E')	
+				map[i ][j - 1]= 'D';
+			else
+				map[i ][j - 1]= 'P';	
+			moved = 1;
+		}
+		else if (key ==  XK_Down  && map[i + 1][j]  != '1')
+		{
+			if(map[i + 1][j]== 'C')
+				(*(game->sprite->collect))++;
+
+				
+			if(map[i][j]  == 'D')
+				map[i][j] = 'E';
+			else
+				map[i][j] = '0';
+				
+				
+			if(map[i + 1][j]== 'W')
+				exit(1);
+			if(map[i + 1][j]  == 'E')	
+				map[i + 1][j] = 'D';
+			else
+				map[i + 1][j] = 'P';	
+			moved = 1;
+		}
 	}
 	for (int i = 0;map[i]; i++)
 	{
 		printf("\"%s\"\n",map[i]);
 	}
+	if(*(game->sprite->collect) == *(game->sprite->total_c))
+	{
+		//prinf("%d     %d", *(game->sprite->collect), *(game->sprite->total_c));
+		get_pos(map, 'E' , &i, &j);
+		if(i >= 0 && j>= 0)
+			map[i][j] = 'W';
+	}
 	if (moved)
 	{
-		//mlx_clear_window(game->mlx, game->win);
+		mlx_clear_window(game->mlx, game->win);
 		draw_map(game, game->sprite, map);
 		mlx_do_sync(game->mlx);
 	}
 }
 
+/*direction :0-> right, 1 -> up, 2->down , 3->left */
+// void move(t_vars *game,int i, int j, int direction)
+// {
+// 	char **map = game->map;
 
-
-
+// if(map[i][j]  == 'D')
+// 	map[i][j] = 'E';
+// else
+// 	map[i][j] = '0';	
+	
+// 	if(direction == 1)
+// 		j++;
+// 	else if(direction == 1)
+// 		j++;
+// 	else if(direction == 1)
+// 		j++;
+// 	else if(direction == 1)
+// 		j++;
+	
+	
+// 	if(map[i - 1][j]  == 'C')
+// 		(*(game->sprite->collect))++;
+	
+// 	if(map[i - 1][j]  == 'W')
+// 		exit(1);
+// 	if(map[i - 1][j]  == 'E')	
+// 		map[i - 1][j] = 'D';
+// 	else
+// 		map[i - 1][j] = 'P';
+// } 
 
 
 
@@ -186,7 +275,7 @@ void	render_game(char	**map, t_vars	*game)
 
 void	draw_map(t_vars *game, t_sprites *sprites, char **map)
 {
-	int i;
+	//int i;
 	size_t x;
 	size_t y;
 	t_image	*img;
@@ -206,22 +295,27 @@ void	draw_map(t_vars *game, t_sprites *sprites, char **map)
 				img = sprites->exit;
 			if(map[x][y] == 'C')
 				img = sprites->collectable;
+			if(map[x][y] == 'D')
+				img = sprites->door_player;
+			if(map[x][y] == 'W')
+				img = sprites->door_open;	
 			//else 
 			//img = sprites->background;
 			if(map[x][y] == 'P')
 				img = sprites->player;
-			if (  (int)y * img->scaled_width > game->win_width || (int)x * img->scaled_hight > game->win_hight)
+			if (  (int)x * img->scaled_width > game->win_hight || (int)y * img->scaled_hight > game->win_width)
 				{
   				  printf("Error: Image coordinates out of bounds!\n");
     				return;
 				}
-			i = mlx_put_image_to_window(game->mlx, game->win, img->scaled_image\
+			 mlx_put_image_to_window(game->mlx, game->win, img->scaled_image\
 				, y * img->scaled_hight, x * img->scaled_width);
-				if (i == 0)
-				{
-					printf("HI2");
-					exit(1);
-				}
+				// if (i != 0)
+				// {
+				// 	printf(" %p		%p		%p		%ld		%ld\n",game->mlx, game->win, img->scaled_image
+				// 		, y * img->scaled_hight, x * img->scaled_width);
+				// 	exit(1);
+				// }
 			y++;
 		}	
 		x++;

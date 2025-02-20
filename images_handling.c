@@ -6,7 +6,7 @@
 /*   By: mshershe <mshershe@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 02:38:01 by mshershe          #+#    #+#             */
-/*   Updated: 2025/02/20 01:55:29 by mshershe         ###   ########.fr       */
+/*   Updated: 2025/02/20 04:22:09 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,31 +14,36 @@
 
 void load_image( t_vars	*game , char **map,t_sprites *sprites)
 {
-	int scaled_hight = 80;
-	int scaled_width = 80;
+	int dim;
 
-	if(!game || !(game->mlx) || !sprites )
+	dim = 80;
+	if(!game || !(game->mlx) || !sprites)
 		exit_game(8, map);
-	sprites_init(sprites ,scaled_hight,scaled_width,map);	
+	sprites_init(sprites ,map);
+	if(!(sprites->door_player) || !(sprites->door_open))
+		exit_game(8, map);	
 	if(!(sprites->wall) || !(sprites->background) || !(sprites->ground))
 		exit_game(8, map);
 	if(!(sprites->collectable) || !(sprites->exit) || !(sprites->player))
 		exit_game(8, map);
-	load_xpm_image(game ,sprites->background,"./sprites/background01.xpm");	
-	load_xpm_image(game ,sprites->wall,"./sprites/wall.xpm");
-	load_xpm_image(game ,sprites->collectable,"./sprites/collectable1.xpm");
-	load_xpm_image(game ,sprites->ground,"./sprites/Grass.xpm");	
-	load_xpm_image(game ,sprites->exit,"./sprites/door/Doors_closed.xpm");
-	load_xpm_image(game ,sprites->player,"./sprites/player/player_front_3.xpm");
-	resize_image(game , sprites->background, scaled_hight, scaled_width);
-	resize_image(game ,sprites->collectable,scaled_hight,scaled_width);
-	resize_image(game ,sprites->exit,scaled_hight,scaled_width);
-	resize_image(game ,sprites->ground,scaled_hight,scaled_width);
-	resize_image(game ,sprites->player,scaled_hight,scaled_width);
-	resize_image(game ,sprites->wall,scaled_hight,scaled_width);
-	//fill_background(game,sprites->background, map);
-	//draw_map(game, sprites, map);
+	load_xpm_image(game ,sprites->background,"./sprites/background01.xpm", dim);	
+	load_xpm_image(game ,sprites->wall,"./sprites/wall.xpm", dim);
+	load_xpm_image(game ,sprites->collectable,"./sprites/collectable1.xpm", dim);
+	load_xpm_image(game ,sprites->ground,"./sprites/Grass.xpm", dim);	
+	load_xpm_image(game ,sprites->exit,"./sprites/door/Doors_closed.xpm", dim);
+	load_xpm_image(game ,sprites->player,"./sprites/player/player_front_3.xpm", dim);
+	load_xpm_image(game ,sprites->door_open,"./sprites/door/Doors_open_2.xpm", dim);
+	load_xpm_image(game ,sprites->door_player,"./sprites/door/door_player.xpm", dim);
+	resize_image(game , sprites->background, dim, dim);
+	resize_image(game ,sprites->collectable,dim,dim);
+	resize_image(game ,sprites->exit,dim,dim);
+	resize_image(game ,sprites->ground,dim,dim);
+	resize_image(game ,sprites->player,dim,dim);
+	resize_image(game ,sprites->wall,dim,dim);
+	resize_image(game ,sprites->door_open,dim,dim);
+	resize_image(game ,sprites->door_player,dim,dim);
 }
+
 void resize_image(t_vars *game, t_image *img, int new_hight, int new_width)
 {
 	int x;
