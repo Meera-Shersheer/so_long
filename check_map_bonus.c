@@ -6,7 +6,7 @@
 /*   By: mshershe <mshershe@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 02:49:32 by mshershe          #+#    #+#             */
-/*   Updated: 2025/02/22 00:28:54 by mshershe         ###   ########.fr       */
+/*   Updated: 2025/02/22 06:33:27 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ int	check_outline(char	**map)
 	{
 		if (row == 0 || row == ft_strlen_d(map) - 1)
 		{
+			col = 0;
 			while (col < ft_strlen(map[row]))
 			{
 				if (map[row][col] != '1')
