@@ -6,7 +6,7 @@
 /*   By: mshershe <mshershe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/16 02:53:20 by mshershe          #+#    #+#             */
-/*   Updated: 2025/02/22 16:56:11 by mshershe         ###   ########.fr       */
+/*   Updated: 2025/02/22 18:22:13 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ void			check_cutoff(char *map);
 int				element_counter(char **map, char element);
 void			floodfill(char **map, int x, int y);
 char			**cpy_matrix(char **map);
-char			**check_invalid_path(char **map);
+char			**check_invalid_path(t_vars *game, char	**map);
 void			get_pos(char **map, char element, int *i, int *j);
 void			load_image(t_vars *game, char **map, t_sprites *sprites);
 void			resize_image(t_vars *game, t_image *img, int new_hight,
@@ -94,7 +94,7 @@ void			sprites_destroy(t_vars *game, t_image *img);
 int				close_window(t_vars *game);
 void			load_resized_image(t_vars *game, char **map,
 					t_sprites *sprites);
-char			**check_map(char **argv);
+char			**check_map(t_vars *game, char **argv);
 void			load_data(t_vars *game, t_sprites *sprites, char **map);
 t_image			*load_img_to_win(t_sprites *sprites, char **map, size_t x,
 					size_t y);
@@ -110,5 +110,6 @@ void			enemy_patrol(char **map);
 int				enemy_move(char **map, int i, int j);
 void			fix_direction(int direction, int *i, int *j);
 int				move_2(char **map, int i, int j, int direction);
-void			destoy_mlx(t_vars *game);
+void			destroy_mlx(t_vars *game);
+void			check_size(t_vars *game, char **map);
 #endif

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_path_bonus.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mshershe <mshershe@student.42amman.com>    +#+  +:+       +#+        */
+/*   By: mshershe <mshershe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 00:10:41 by mshershe          #+#    #+#             */
-/*   Updated: 2025/02/22 01:58:46 by mshershe         ###   ########.fr       */
+/*   Updated: 2025/02/22 19:11:16 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,24 +30,30 @@ void	floodfill(char **map, int x, int y)
 	}
 }
 
-char	**cpy_matrix(char	**map)
+char	**check_invalid_path(t_vars *game, char	**map)
 {
-	size_t	i;
+	int		x;
+	int		y;
 	char	**map_cpy;
 
-	i = 0;
-	if (map == NULL || *map == NULL)
-		exit_game(-1, map);
-	map_cpy = malloc(sizeof(char *) * (ft_strlen_d(map) + 1));
-	if (map_cpy == NULL)
-		exit_game(-1, map);
-	while (i < ft_strlen_d(map))
+	y = 0;
+	x = 0;
+	check_size(game, map);
+	map_cpy = cpy_matrix(map);
+	get_pos(map, 'P', &x, &y);
+	floodfill(map_cpy, x, y);
+	if (element_counter(map_cpy, 'C') != 0)
 	{
-		map_cpy[i] = ft_strdup((map[i]));
-		i++;
+		ft_free(map);
+		exit_game(5, map_cpy);
 	}
-	map_cpy[i] = NULL;
-	return (map_cpy);
+	if (element_counter(map_cpy, 'E') != 0)
+	{
+		ft_free(map);
+		exit_game(5, map_cpy);
+	}
+	ft_free(map_cpy);
+	return (NULL);
 }
 
 char	**check_invalid_path(char	**map)

@@ -6,7 +6,7 @@
 /*   By: mshershe <mshershe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/16 02:38:50 by mshershe          #+#    #+#             */
-/*   Updated: 2025/02/22 16:47:06 by mshershe         ###   ########.fr       */
+/*   Updated: 2025/02/22 17:12:58 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,10 @@ char	*read_map(char *map_name)
 			break ;
 		map = gnl_strjoin(map, line);
 		if (map == NULL)
+		{
+			free(line);
 			exit_game(-1, NULL);
+		}
 		free (line);
 	}
 	close (fd);

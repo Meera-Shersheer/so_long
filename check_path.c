@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_path.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mshershe <mshershe@student.42amman.com>    +#+  +:+       +#+        */
+/*   By: mshershe <mshershe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 00:10:41 by mshershe          #+#    #+#             */
-/*   Updated: 2025/02/21 23:30:18 by mshershe         ###   ########.fr       */
+/*   Updated: 2025/02/22 19:11:12 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,13 +44,18 @@ char	**cpy_matrix(char	**map)
 	while (i < ft_strlen_d(map))
 	{
 		map_cpy[i] = ft_strdup((map[i]));
+		if (!map_cpy[i])
+		{
+			ft_free(map_cpy);
+			exit_game(-1, map);
+		}
 		i++;
 	}
 	map_cpy[i] = NULL;
 	return (map_cpy);
 }
 
-char	**check_invalid_path(char	**map)
+char	**check_invalid_path(t_vars *game, char	**map)
 {
 	int		x;
 	int		y;
@@ -58,6 +63,7 @@ char	**check_invalid_path(char	**map)
 
 	y = 0;
 	x = 0;
+	check_size(game, map);
 	map_cpy = cpy_matrix(map);
 	get_pos(map, 'P', &x, &y);
 	floodfill(map_cpy, x, y);

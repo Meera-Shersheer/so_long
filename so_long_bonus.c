@@ -6,7 +6,7 @@
 /*   By: mshershe <mshershe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 21:15:49 by mshershe          #+#    #+#             */
-/*   Updated: 2025/02/22 16:57:09 by mshershe         ###   ########.fr       */
+/*   Updated: 2025/02/22 19:13:56 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,20 +19,19 @@ int	main(int argc, char **argv)
 
 	if (argc != 2)
 		exit_game(-1, NULL);
-	game.map = check_map(argv);
-	check_images(&game);
-	game.mlx = NULL;
-	game.win = NULL;
-	game.sprite = &sprites;
 	game.mlx = mlx_init();
 	if (!game.mlx)
-		exit_game(6, game.map);
-	game.win_hight = ft_strlen_d(game.map) * 40;
-	game.win_width = ft_strlen(*(game.map)) * 40;
+		exit_game(6, NULL);
+	game.map = check_map(&game, argv);
+	check_images(&game);
+	game.win = NULL;
+	game.sprite = &sprites;
+	game.win_hight = ft_strlen_d(game.map) * 32;
+	game.win_width = ft_strlen(*(game.map)) * 32;
 	game.win = mlx_new_window(game.mlx, game.win_width, \
-		game.win_hight, "so_long");
+	game.win_hight, "so_long");
 	if (!game.win)
-		destoy_mlx(&game);
+		destroy_mlx(&game);
 	load_image(&game, game.map, game.sprite);
 	load_data(&game, game.sprite, game.map);
 	draw_map(&game, game.sprite, game.map);
@@ -41,7 +40,7 @@ int	main(int argc, char **argv)
 	mlx_loop(game.mlx);
 }
 
-char	**check_map(char **argv)
+char	**check_map(t_vars *game, char **argv)
 {
 	char	**map;
 	char	*s;
@@ -59,7 +58,7 @@ char	**check_map(char **argv)
 		exit_game(-1, map);
 	}
 	check_invalid_map(map);
-	check_invalid_path(map);
+	check_invalid_path(game, map);
 	return (map);
 }
 
