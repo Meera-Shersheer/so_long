@@ -6,7 +6,7 @@
 /*   By: mshershe <mshershe@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/16 02:53:20 by mshershe          #+#    #+#             */
-/*   Updated: 2025/02/22 05:59:39 by mshershe         ###   ########.fr       */
+/*   Updated: 2025/02/22 06:19:18 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,4 +104,5 @@ void	loss(t_vars *game);
 void	enemy_patrol(char **map);
 int	enemy_move(char **map, int i, int j);
 void	fix_direction(int direction, int *i, int *j);
+int	move_2(char **map, int i, int j, int direction);
 #endif
