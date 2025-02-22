@@ -6,7 +6,7 @@
 /*   By: mshershe <mshershe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 21:15:49 by mshershe          #+#    #+#             */
-/*   Updated: 2025/02/22 19:30:38 by mshershe         ###   ########.fr       */
+/*   Updated: 2025/02/22 20:56:06 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,10 @@ int	main(int argc, char **argv)
 	t_sprites	sprites;
 
 	if (argc != 2)
-		exit_game(-1, NULL);
+		exit_game(-1, NULL, NULL);
 	game.mlx = mlx_init();
 	if (!game.mlx)
-		exit_game(6, NULL);
+		exit_game(6, NULL, NULL);
 	game.map = check_map(&game, argv);
 	check_images(&game);
 	game.win = NULL;
@@ -46,19 +46,19 @@ char	**check_map(t_vars *game, char **argv)
 	char	*s;
 
 	check_extenstion(argv[1], game);
-	s = read_map(argv[1]);
+	s = read_map(game, argv[1]);
 	if (s == NULL)
-		exit_game(-1, NULL);
+		exit_game(-1, NULL, game);
 	map = NULL;
-	map = transform_into_matrix(s, map);
+	map = transform_into_matrix(game, s, map);
 	if (map == NULL)
 	{
 		if (s)
 			free (s);
-		exit_game(-1, map);
+		exit_game(-1, map, game);
 	}
-	check_invalid_map(map);
-	check_invalid_path(game, map);
+	check_invalid_map(map, game);
+	check_invalid_path(map, game);
 	return (map);
 }
 
@@ -82,21 +82,21 @@ void	update_map(char **map, int key, t_vars *game)
 	i = 0;
 	j = 0;
 	moved = 0;
-	get_pos(map, 'P', &i, &j);
+	get_pos(game, 'P', &i, &j);
 	if (i < 0 && j < 0)
-		get_pos(map, 'D', &i, &j);
+		get_pos(game, 'D', &i, &j);
 	if (i >= 0 && j >= 0)
 		moved = keys(game, key, i, j);
 	if (*(game->sprite->collect) == *(game->sprite->total_c))
 	{
-		get_pos(map, 'E', &i, &j);
+		get_pos(game, 'E', &i, &j);
 		if (i >= 0 && j >= 0)
 			map[i][j] = 'W';
 	}
 	render_game(map, game, moved);
 }
 
-int	keys(t_vars *game, int key, int i, int j )
+int	keys(t_vars *game, int key, int i, int j)
 {
 	char	**map;
 

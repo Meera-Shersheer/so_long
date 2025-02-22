@@ -6,7 +6,7 @@
 /*   By: mshershe <mshershe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 04:02:01 by mshershe          #+#    #+#             */
-/*   Updated: 2025/02/22 16:05:27 by mshershe         ###   ########.fr       */
+/*   Updated: 2025/02/22 20:24:25 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,22 +15,22 @@
 void	load_xpm_image(t_vars *game, t_image *img, char *filename, int scaled_d)
 {
 	if (!game || !(game->mlx) || !filename || !img)
-		exit_game (8, game->map);
+		exit_game (8, game->map, game);
 	img->image = mlx_xpm_file_to_image(game->mlx, filename, \
 		&(img->hight), &(img->width));
 	if (img->image == NULL)
 	{
 		ft_printf("Error: failed to load the images\n");
-		exit_game(-1, game->map);
+		exit_game(-1, game->map, game);
 	}
 	img->scaled_hight = scaled_d;
 	img->scaled_width = scaled_d;
 }
 
-void	sprites_init(t_sprites *sprites, char **map)
+void	sprites_init(t_vars *game, t_sprites *sprites, char **map)
 {
 	if (!sprites)
-		exit_game(8, map);
+		exit_game(8, map, game);
 	sprites->ground = malloc(sizeof(t_image));
 	sprites->wall = malloc(sizeof(t_image));
 	sprites->player = malloc(sizeof(t_image));
@@ -43,13 +43,13 @@ void	sprites_init(t_sprites *sprites, char **map)
 	sprites->player_l = malloc(sizeof(t_image));
 	sprites->player_r = malloc(sizeof(t_image));
 	if (!(sprites->door_player) || !(sprites->door_open))
-		exit_game(8, map);
+		exit_game(8, map, game);
 	if (!(sprites->wall) || !(sprites->ground) || !(sprites->player_l))
-		exit_game(8, map);
+		exit_game(8, map, game);
 	if (!(sprites->collectable) || !(sprites->exit) || !(sprites->enemy_r))
-		exit_game(8, map);
+		exit_game(8, map, game);
 	if (!(sprites->enemy_l) || !(sprites->player) || !(sprites->player_r))
-		exit_game(8, map);
+		exit_game(8, map, game);
 }
 
 void	sprites_destroy(t_vars *game, t_image *img)
@@ -95,7 +95,7 @@ void	load_data(t_vars *game, t_sprites *sprites, char **map)
 	game->sprite->total_c = malloc (sizeof(int *));
 	game->sprite->moves = malloc (sizeof(int *));
 	if (!(sprites->collect) || !(sprites->total_c) || !(sprites->moves))
-		exit_game(-1, map);
+//		exit_game(-1, map, game); use close window 
 	*(game->sprite->collect) = 0;
 	*(game->sprite->moves) = 0;
 	*(game->sprite->total_c) = element_counter(map, 'C');

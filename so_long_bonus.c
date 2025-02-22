@@ -6,7 +6,7 @@
 /*   By: mshershe <mshershe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 21:15:49 by mshershe          #+#    #+#             */
-/*   Updated: 2025/02/22 19:31:05 by mshershe         ###   ########.fr       */
+/*   Updated: 2025/02/22 20:32:08 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,10 @@ int	main(int argc, char **argv)
 	t_sprites	sprites;
 
 	if (argc != 2)
-		exit_game(-1, NULL);
+		exit_game(-1, NULL, NULL);
 	game.mlx = mlx_init();
 	if (!game.mlx)
-		exit_game(6, NULL);
+		exit_game(6, NULL, NULL);
 	game.map = check_map(&game, argv);
 	check_images(&game);
 	game.win = NULL;
@@ -48,14 +48,14 @@ char	**check_map(t_vars *game, char **argv)
 	check_extenstion(argv[1], game);
 	s = read_map(argv[1]);
 	if (s == NULL)
-		exit_game(-1, NULL);
+		exit_game(-1, NULL, game);
 	map = NULL;
 	map = transform_into_matrix(s, map);
 	if (map == NULL)
 	{
 		if (s)
 			free (s);
-		exit_game(-1, map);
+		exit_game(-1, map, game);
 	}
 	check_invalid_map(map);
 	check_invalid_path(game, map);

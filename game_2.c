@@ -6,7 +6,7 @@
 /*   By: mshershe <mshershe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 16:54:26 by mshershe          #+#    #+#             */
-/*   Updated: 2025/02/22 19:25:56 by mshershe         ###   ########.fr       */
+/*   Updated: 2025/02/22 20:18:04 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,7 @@
 
 void	destroy_mlx(t_vars *game)
 {
-	mlx_destroy_display(game->mlx);
-	free(game->mlx);
-	exit_game(7, NULL);
+	exit_game(7, NULL, game);
 }
 
 void	check_size(t_vars *game, char **map)

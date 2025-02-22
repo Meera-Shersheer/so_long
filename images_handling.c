@@ -6,7 +6,7 @@
 /*   By: mshershe <mshershe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 02:38:01 by mshershe          #+#    #+#             */
-/*   Updated: 2025/02/22 17:49:13 by mshershe         ###   ########.fr       */
+/*   Updated: 2025/02/22 20:47:54 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,14 +18,14 @@ void	load_image( t_vars	*game, char **map, t_sprites *sprites)
 
 	dim = 32;
 	if (!game || !(game->mlx) || !sprites)
-		exit_game(8, map);
-	sprites_init(sprites, map);
+		exit_game(8, map, game);
+	sprites_init(game, sprites, map);
 	if (!(sprites->door_player) || !(sprites->door_open))
-		exit_game(8, map);
+		exit_game(8, map, game);
 	if (!(sprites->wall) || !(sprites->ground))
-		exit_game(8, map);
+		exit_game(8, map, game);
 	if (!(sprites->collectable) || !(sprites->exit) || !(sprites->player))
-		exit_game(8, map);
+		exit_game(8, map, game);
 	load_xpm_image(game, sprites->wall, "./sprites/wall.xpm", dim);
 	load_xpm_image(game, sprites->collectable, \
 		"./sprites/collectable1.xpm", dim);
@@ -59,7 +59,7 @@ void	check_images(t_vars	*game)
 	{
 		fd = open(images[i], O_RDONLY);
 		if (fd < 0)
-			exit_game(9, game->map);
+			exit_game(9, game->map, game);
 		close (fd);
 		i++;
 	}
@@ -71,13 +71,13 @@ void	load_resized_image( t_vars	*game, char **map, t_sprites *sprites)
 
 	dim = 32;
 	if (!game || !(game->mlx) || !sprites)
-		exit_game(8, map);
+		exit_game(8, map, game);
 	if (!(sprites->door_player) || !(sprites->door_open))
-		exit_game(8, map);
+		exit_game(8, map, game);
 	if (!(sprites->wall) || !(sprites->ground))
-		exit_game(8, map);
+		exit_game(8, map, game);
 	if (!(sprites->collectable) || !(sprites->exit) || !(sprites->player))
-		exit_game(8, map);
+		exit_game(8, map, game);
 	resize_image(game, sprites->collectable, dim, dim);
 	resize_image(game, sprites->exit, dim, dim);
 	resize_image(game, sprites->ground, dim, dim);

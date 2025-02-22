@@ -6,7 +6,7 @@
 /*   By: mshershe <mshershe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 02:49:32 by mshershe          #+#    #+#             */
-/*   Updated: 2025/02/22 19:47:59 by mshershe         ###   ########.fr       */
+/*   Updated: 2025/02/22 20:17:32 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ void	check_cutoff(char	*map, t_vars *game)
 		exit_game(-1, NULL, game);
 	i = 0;
 	j = ft_strlen(map);
-	if (map[0] == '\n' || (j > 0 && map[j - 1] == '\n'))
+	if (map[0] == '\n')
 	{
 		free(map);
 		exit_game(4, NULL, game);

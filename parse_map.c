@@ -6,13 +6,13 @@
 /*   By: mshershe <mshershe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/16 02:38:50 by mshershe          #+#    #+#             */
-/*   Updated: 2025/02/22 19:41:18 by mshershe         ###   ########.fr       */
+/*   Updated: 2025/02/22 20:44:45 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-char	*read_map(char *map_name)
+char	*read_map(t_vars *game, char *map_name)
 {
 	int		fd;
 	char	*line;
@@ -20,10 +20,10 @@ char	*read_map(char *map_name)
 
 	fd = open(map_name, O_RDONLY);
 	if (fd == -1)
-		exit_game(1, NULL);
+		exit_game(1, NULL, game);
 	map = ft_strdup("");
 	if (map == NULL)
-		exit_game(-1, NULL);
+		exit_game(-1, NULL, game);
 	while (1)
 	{
 		line = get_next_line(fd);
@@ -33,7 +33,7 @@ char	*read_map(char *map_name)
 		if (map == NULL)
 		{
 			free(line);
-			exit_game(-1, NULL);
+			exit_game(-1, NULL, game);
 		}
 		free (line);
 	}
@@ -41,16 +41,16 @@ char	*read_map(char *map_name)
 	return (map);
 }
 
-char	**transform_into_matrix(char *map, char **map_matrix)
+char	**transform_into_matrix(t_vars *game, char *map, char **map_matrix)
 {
 	if (map == NULL)
 		return (NULL);
-	check_cutoff(map);
+	check_cutoff(map, game);
 	map_matrix = ft_split(map, '\n');
 	if (map_matrix == NULL)
 	{
 		free (map);
-		exit_game(-1, map_matrix);
+		exit_game(-1, map_matrix, game);
 	}
 	free (map);
 	return (map_matrix);

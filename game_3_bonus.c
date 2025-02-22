@@ -6,13 +6,13 @@
 /*   By: mshershe <mshershe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 06:06:24 by mshershe          #+#    #+#             */
-/*   Updated: 2025/02/22 19:25:11 by mshershe         ###   ########.fr       */
+/*   Updated: 2025/02/22 20:19:10 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-int	element_counter(char **map, char element)
+int	element_counter(char **map, char element, t_vars *game)
 {
 	int		counter;
 	size_t	i;
@@ -22,7 +22,7 @@ int	element_counter(char **map, char element)
 	j = 0;
 	counter = 0;
 	if (map == NULL || *map == NULL)
-		exit_game(-1, NULL);
+		exit_game(-1, NULL, game);
 	while (i < ft_strlen_d(map))
 	{
 		j = 0;
@@ -49,9 +49,7 @@ void	render_game(char **map, t_vars *game, int moved)
 
 void	destroy_mlx(t_vars *game)
 {
-	mlx_destroy_display(game->mlx);
-	free(game->mlx);
-	exit_game(7, NULL);
+	exit_game(7, NULL, game);
 }
 
 void	check_size(t_vars *game, char **map)
