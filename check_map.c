@@ -3,19 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   check_map.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mshershe <mshershe@student.42amman.com>    +#+  +:+       +#+        */
+/*   By: mshershe <mshershe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 02:49:32 by mshershe          #+#    #+#             */
-/*   Updated: 2025/02/22 06:33:08 by mshershe         ###   ########.fr       */
+/*   Updated: 2025/02/22 19:30:03 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-void	check_extenstion(char *file_name)
+void	check_extenstion(char *file_name , t_vars *game)
 {
 	if (ft_strncmp(&(file_name[ft_strlen(file_name)- 4]), ".ber", 4) != 0)
+	{
+		mlx_destroy_display(game->mlx);
+		free(game->mlx);
 		exit_game(0, NULL);
+	}
 }
 
 char	**check_invalid_map(char	**map)

@@ -6,7 +6,7 @@
 /*   By: mshershe <mshershe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 06:06:24 by mshershe          #+#    #+#             */
-/*   Updated: 2025/02/22 19:12:08 by mshershe         ###   ########.fr       */
+/*   Updated: 2025/02/22 19:25:11 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,13 @@ void	check_size(t_vars *game, char **map)
 	y = 0;
 	mlx_get_screen_size(game->mlx, &x, &y);
 	if (y < (32 * (int)ft_strlen_d(map)))
+	{
+		ft_free(map);
 		destroy_mlx(game);
+	}
 	if (x < (32 * (int)ft_strlen((map)[0])))
+	{
+		ft_free(map);
 		destroy_mlx(game);
+	}
 }

@@ -6,7 +6,7 @@
 /*   By: mshershe <mshershe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 21:15:49 by mshershe          #+#    #+#             */
-/*   Updated: 2025/02/22 19:13:56 by mshershe         ###   ########.fr       */
+/*   Updated: 2025/02/22 19:31:05 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ char	**check_map(t_vars *game, char **argv)
 	char	**map;
 	char	*s;
 
-	check_extenstion(argv[1]);
+	check_extenstion(argv[1], game);
 	s = read_map(argv[1]);
 	if (s == NULL)
 		exit_game(-1, NULL);

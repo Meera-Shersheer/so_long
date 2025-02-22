@@ -6,7 +6,7 @@
 /*   By: mshershe <mshershe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/16 02:53:20 by mshershe          #+#    #+#             */
-/*   Updated: 2025/02/22 18:22:13 by mshershe         ###   ########.fr       */
+/*   Updated: 2025/02/22 19:41:39 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,8 +66,8 @@ typedef struct s_vars
 }				t_vars;
 
 char			*read_map(char *map_name);
-void			exit_game(int code, char **map);
-void			check_extenstion(char *file_name);
+void		exit_game(int code, char **map,t_vars *game);
+void	check_extenstion(char *file_name , t_vars *game);
 char			**transform_into_matrix(char *map, char **map_matrix);
 int				check_rectangular(char **map);
 int				check_outline(char **map);

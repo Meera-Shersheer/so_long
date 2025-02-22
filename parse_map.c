@@ -6,7 +6,7 @@
 /*   By: mshershe <mshershe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/16 02:38:50 by mshershe          #+#    #+#             */
-/*   Updated: 2025/02/22 17:12:58 by mshershe         ###   ########.fr       */
+/*   Updated: 2025/02/22 19:41:18 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ char	**transform_into_matrix(char *map, char **map_matrix)
 	return (map_matrix);
 }
 
-void	exit_game(int code, char **map)
+void	exit_game(int code, char **map,t_vars *game)
 {
 	write(2, "Error\n", 6);
 	if (code == 0)
@@ -81,6 +81,11 @@ void	exit_game(int code, char **map)
 		ft_putendl_fd("missing sprite's file\n", 2);
 	if (map != NULL)
 		ft_free(map);
+	if(game)
+	{
+		mlx_destroy_display(game->mlx);
+		free(game->mlx);
+	}
 	exit (1);
 }
 

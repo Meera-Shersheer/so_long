@@ -6,7 +6,7 @@
 /*   By: mshershe <mshershe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 00:10:41 by mshershe          #+#    #+#             */
-/*   Updated: 2025/02/22 19:11:16 by mshershe         ###   ########.fr       */
+/*   Updated: 2025/02/22 19:49:11 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,18 +45,18 @@ char	**check_invalid_path(t_vars *game, char	**map)
 	if (element_counter(map_cpy, 'C') != 0)
 	{
 		ft_free(map);
-		exit_game(5, map_cpy);
+		exit_game(5, map_cpy, game);
 	}
 	if (element_counter(map_cpy, 'E') != 0)
 	{
 		ft_free(map);
-		exit_game(5, map_cpy);
+		exit_game(5, map_cpy, game);
 	}
 	ft_free(map_cpy);
 	return (NULL);
 }
 
-char	**check_invalid_path(char	**map)
+char	**check_invalid_path(char	**map, t_vars *game)
 {
 	int		x;
 	int		y;
@@ -70,12 +70,12 @@ char	**check_invalid_path(char	**map)
 	if (element_counter(map_cpy, 'C') != 0)
 	{
 		ft_free(map);
-		exit_game(5, map_cpy);
+		exit_game(5, map_cpy, game);
 	}
 	if (element_counter(map_cpy, 'E') != 0)
 	{
 		ft_free(map);
-		exit_game(5, map_cpy);
+		exit_game(5, map_cpy, game);
 	}
 	ft_free(map_cpy);
 	return (NULL);
