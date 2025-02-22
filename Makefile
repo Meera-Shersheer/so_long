@@ -1,6 +1,6 @@
-SRC= parse_map.c so_long.c check_map.c check_path.c images_handling.c images_handling_2.c game.c
-BNS= parse_map_bonus.c so_long_bonus.c check_map_bonus.c check_path_bonus.c images_handling_bonus.c images_handling_2_bonus.c \
-game_bonus.c game_2_bonus.c game_3_bonus.c
+SRC= parse_map.c so_long.c check_map.c check_path.c images_handling.c images_handling_2.c game.c game_2.c
+BNS= parse_map_bonus.c so_long_bonus.c check_map_bonus.c check_path_bonus.c images_handling_bonus.c \
+game_bonus.c game_2_bonus.c game_3_bonus.c images_handling_2_bonus.c
 
 NAME = so_long
 CC= cc

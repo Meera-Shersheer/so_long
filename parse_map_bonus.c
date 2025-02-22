@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_map_bonus.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mshershe <mshershe@student.42amman.com>    +#+  +:+       +#+        */
+/*   By: mshershe <mshershe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/16 02:38:50 by mshershe          #+#    #+#             */
-/*   Updated: 2025/02/22 00:31:21 by mshershe         ###   ########.fr       */
+/*   Updated: 2025/02/22 16:52:19 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,25 +57,25 @@ void	exit_game(int code, char **map)
 {
 	write(2, "Error\n", 6);
 	if (code == 0)
-		ft_printf("The file extension is incorrect\n");
+		ft_putendl_fd("The file extension is incorrect\n", 2);
 	if (code == 1)
 		perror("Error opening file ");
 	if (code == 2)
-		ft_printf("The map is Invalid\n");
+		ft_putendl_fd("The map is Invalid\n", 2);
 	if (code == 3)
-		ft_printf("The map is not fully surrounded by walls\n");
+		ft_putendl_fd("The map is not fully surrounded by walls\n", 2);
 	if (code == 4)
-		ft_printf("The map is cut\n");
+		ft_putendl_fd("The map is cut\n", 2);
 	if (code == 5)
-		ft_printf("Invalid path\n");
+		ft_putendl_fd("Invalid path\n", 2);
 	if (code == 6)
-		perror("MiniLibX initialization failed!\n");
+		perror("MiniLibX initialization failed! ");
 	if (code == 7)
-		perror("Window creation failed!\n");
+		perror("Window creation failed! ");
 	if (code == 8)
-		printf("the input is null\n");
+		ft_putendl_fd("the input is null\n", 2);
 	if (code == 9)
-		printf("missing sprite's file\n");
+		ft_putendl_fd("missing sprite's file\n", 2);
 	if (map != NULL)
 		ft_free(map);
 	exit (1);

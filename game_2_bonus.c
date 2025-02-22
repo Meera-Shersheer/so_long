@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   game_2_bonus.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mshershe <mshershe@student.42amman.com>    +#+  +:+       +#+        */
+/*   By: mshershe <mshershe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 00:27:10 by mshershe          #+#    #+#             */
-/*   Updated: 2025/02/22 06:14:07 by mshershe         ###   ########.fr       */
+/*   Updated: 2025/02/22 15:49:24 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,13 +98,13 @@ t_image	*load_img_to_win(t_sprites *sprites, char **map, size_t x, size_t y)
 	if (map[x][y] == 'P')
 		return (sprites->player);
 	if (map[x][y] == 'N')
-		return (sprites->enemy_R);
+		return (sprites->enemy_r);
 	if (map[x][y] == 'M')
-		return (sprites->enemy_L);
+		return (sprites->enemy_l);
 	if (map[x][y] == 'R')
-		return (sprites->player_R);
+		return (sprites->player_r);
 	if (map[x][y] == 'L')
-		return (sprites->player_L);
+		return (sprites->player_l);
 	else
 		return (NULL);
 }

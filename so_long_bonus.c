@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   so_long_bonus.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mshershe <mshershe@student.42amman.com>    +#+  +:+       +#+        */
+/*   By: mshershe <mshershe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 21:15:49 by mshershe          #+#    #+#             */
-/*   Updated: 2025/02/22 06:11:26 by mshershe         ###   ########.fr       */
+/*   Updated: 2025/02/22 16:57:09 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,12 +27,12 @@ int	main(int argc, char **argv)
 	game.mlx = mlx_init();
 	if (!game.mlx)
 		exit_game(6, game.map);
-	game.win_hight = ft_strlen_d(game.map) * 60;
-	game.win_width = ft_strlen(*(game.map)) * 60;
+	game.win_hight = ft_strlen_d(game.map) * 40;
+	game.win_width = ft_strlen(*(game.map)) * 40;
 	game.win = mlx_new_window(game.mlx, game.win_width, \
 		game.win_hight, "so_long");
 	if (!game.win)
-		exit_game(7, game.map);
+		destoy_mlx(&game);
 	load_image(&game, game.map, game.sprite);
 	load_data(&game, game.sprite, game.map);
 	draw_map(&game, game.sprite, game.map);
