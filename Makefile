@@ -1,11 +1,11 @@
-SRC= parse_map.c so_long.c check_map.c check_path.c images_handling.c images_handling_2.c
-BNS= 
+SRC= parse_map.c so_long.c check_map.c check_path.c images_handling.c images_handling_2.c game.c
+BNS= parse_map_bonus.c so_long_bonus.c check_map_bonus.c check_path_bonus.c images_handling_bonus.c images_handling_2_bonus.c \
+game_bonus.c game_2_bonus.c
 
 NAME = so_long
-INC=/usr/include
 CC= cc
 CFLAGS= -Wall -Wextra -Werror -g3
-
+BNS_NAME = so_long
 #PATH LIB
 LFTDIR= ./Libft
 
@@ -31,6 +31,9 @@ clean:
 	@rm -rf $(OBJ_SRC) $(OBJ_DIR)
 	@$(MAKE) -sC $(LFTDIR) clean
 
+bonus:| libft $(OBJ_BNS)
+	$(CC) $(CFLAGS) $(OBJ_BNS) -o $(BNS_NAME) -L$(LFTDIR) -lft  -Lminilibx-linux -lmlx -lXext -lX11 -Iminilibx-linux
+
 fclean: clean
 	@rm -f $(OBJ_SRC) 
 	@$(MAKE) -C $(LFTDIR) fclean 
@@ -38,4 +41,4 @@ fclean: clean
 
 re: fclean all
 
-.PHONY: all clean fclean re libft       	
+.PHONY: all clean fclean re libft bonus      	

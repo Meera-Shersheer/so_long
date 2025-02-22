@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   images_handling.c                                  :+:      :+:    :+:   */
+/*   images_handling_bonus.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mshershe <mshershe@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 02:38:01 by mshershe          #+#    #+#             */
-/*   Updated: 2025/02/22 00:20:51 by mshershe         ###   ########.fr       */
+/*   Updated: 2025/02/22 06:12:46 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,18 @@ void	load_image( t_vars	*game, char **map, t_sprites *sprites)
 	sprites_init(sprites, map);
 	if (!(sprites->door_player) || !(sprites->door_open))
 		exit_game(8, map);
-	if (!(sprites->wall) || !(sprites->ground))
+	if (!(sprites->wall) || !(sprites->ground) || !(sprites->enemy_L))
 		exit_game(8, map);
 	if (!(sprites->collectable) || !(sprites->exit) || !(sprites->player))
 		exit_game(8, map);
+	if (!(sprites->player_R) || !(sprites->player_L) || !(sprites->enemy_R))
+		exit_game(8, map);
+	load_xpms(game, sprites, dim);
+	load_resized_image(game, map, sprites);
+}
+
+void	load_xpms(t_vars *game, t_sprites *sprites, int dim)
+{
 	load_xpm_image(game, sprites->wall, "./sprites/wall.xpm", dim);
 	load_xpm_image(game, sprites->collectable, \
 		"./sprites/collectable1.xpm", dim);
@@ -38,14 +46,19 @@ void	load_image( t_vars	*game, char **map, t_sprites *sprites)
 		"./sprites/door/Doors_open_2.xpm", dim);
 	load_xpm_image(game, sprites->door_player, \
 		"./sprites/door/door_player.xpm", dim);
-	load_resized_image(game, map, sprites);
+	load_xpm_image(game, sprites->enemy_L, "./sprites/enemy_left.xpm", dim);
+	load_xpm_image(game, sprites->enemy_R, "./sprites/enemy_right.xpm", dim);
+	load_xpm_image(game, sprites->player_L, \
+		"./sprites/player/player_right_1.xpm", dim);
+	load_xpm_image(game, sprites->player_R, \
+		"./sprites/player/player_left_1.xpm", dim);
 }
 
 void	check_images(t_vars	*game)
 {
 	int		fd;
 	int		i;
-	char	*images[7];
+	char	*images[11];
 
 	images[0] = "./sprites/wall.xpm";
 	images[1] = "./sprites/collectable1.xpm";
@@ -54,8 +67,12 @@ void	check_images(t_vars	*game)
 	images[4] = "./sprites/player/player_front_3.xpm";
 	images[5] = "./sprites/door/Doors_open_2.xpm";
 	images[6] = "./sprites/door/door_player.xpm";
+	images[7] = "./sprites/enemy_left.xpm";
+	images[8] = "./sprites/enemy_right.xpm";
+	images[9] = "./sprites/player/player_right_1.xpm";
+	images[10] = "./sprites/player/player_left_1.xpm";
 	i = 0;
-	while (i < 7)
+	while (i < 11)
 	{
 		fd = open(images[i], O_RDONLY);
 		if (fd < 0)
@@ -74,9 +91,11 @@ void	load_resized_image( t_vars	*game, char **map, t_sprites *sprites)
 		exit_game(8, map);
 	if (!(sprites->door_player) || !(sprites->door_open))
 		exit_game(8, map);
-	if (!(sprites->wall) || !(sprites->ground))
+	if (!(sprites->wall) || !(sprites->ground) || !(sprites->player_R))
 		exit_game(8, map);
 	if (!(sprites->collectable) || !(sprites->exit) || !(sprites->player))
+		exit_game(8, map);
+	if (!(sprites->enemy_L) || !(sprites->player_L) || !(sprites->enemy_R))
 		exit_game(8, map);
 	resize_image(game, sprites->collectable, dim, dim);
 	resize_image(game, sprites->exit, dim, dim);
@@ -85,6 +104,10 @@ void	load_resized_image( t_vars	*game, char **map, t_sprites *sprites)
 	resize_image(game, sprites->wall, dim, dim);
 	resize_image(game, sprites->door_open, dim, dim);
 	resize_image(game, sprites->door_player, dim, dim);
+	resize_image(game, sprites->player_L, dim, dim);
+	resize_image(game, sprites->player_R, dim, dim);
+	resize_image(game, sprites->enemy_L, dim, dim);
+	resize_image(game, sprites->enemy_R, dim, dim);
 }
 
 void	resize_image(t_vars *game, t_image *img, int new_hight, int new_width)
@@ -113,16 +136,6 @@ void	resize_image(t_vars *game, t_image *img, int new_hight, int new_width)
 			x++;
 		}
 		y++;
-	}
-}
-
-void	render_game(char **map, t_vars *game, int moved)
-{
-	if (moved)
-	{
-		mlx_clear_window(game->mlx, game->win);
-		draw_map(game, game->sprite, map);
-		mlx_do_sync(game->mlx);
 	}
 }
 

@@ -6,7 +6,7 @@
 /*   By: mshershe <mshershe@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 18:34:18 by mshershe          #+#    #+#             */
-/*   Updated: 2025/02/07 21:52:31 by mshershe         ###   ########.fr       */
+/*   Updated: 2025/02/21 20:08:51 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,8 +135,8 @@ char	**ft_split(char const *s, char c)
 	char	**ptr;
 
 	ptr = malloc((count_words(s, c) + 1) * sizeof(char *));
-	if (!s || !ptr)
-		return (NULL);
+	if (!s || *s == '\0' || !ptr)
+		return (free(ptr), NULL);
 	i = 0;
 	l = -1;
 	while (count_words(s, c) > ++l)

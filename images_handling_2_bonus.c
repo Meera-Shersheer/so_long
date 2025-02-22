@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   images_handling_2.c                                :+:      :+:    :+:   */
+/*   images_handling_2_bonus.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mshershe <mshershe@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 04:02:01 by mshershe          #+#    #+#             */
-/*   Updated: 2025/02/22 00:20:16 by mshershe         ###   ########.fr       */
+/*   Updated: 2025/02/22 06:11:57 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,11 +38,17 @@ void	sprites_init(t_sprites *sprites, char **map)
 	sprites->collectable = malloc(sizeof(t_image));
 	sprites->door_player = malloc(sizeof(t_image));
 	sprites->door_open = malloc(sizeof(t_image));
+	sprites->enemy_R = malloc(sizeof(t_image));
+	sprites->enemy_L = malloc(sizeof(t_image));
+	sprites->player_L = malloc(sizeof(t_image));
+	sprites->player_R = malloc(sizeof(t_image));
 	if (!(sprites->door_player) || !(sprites->door_open))
 		exit_game(8, map);
-	if (!(sprites->wall) || !(sprites->ground))
+	if (!(sprites->wall) || !(sprites->ground) || !(sprites->player_L))
 		exit_game(8, map);
-	if (!(sprites->collectable) || !(sprites->exit) || !(sprites->player))
+	if (!(sprites->collectable) || !(sprites->exit) || !(sprites->enemy_R))
+		exit_game(8, map);
+	if (!(sprites->enemy_L) || !(sprites->player) || !(sprites->player_R))
 		exit_game(8, map);
 }
 
@@ -68,6 +74,10 @@ int	close_window(t_vars *game)
 		sprites_destroy(game, game->sprite->player);
 		sprites_destroy(game, game->sprite->exit);
 		sprites_destroy(game, game->sprite->ground);
+		sprites_destroy(game, game->sprite->enemy_L);
+		sprites_destroy(game, game->sprite->enemy_R);
+		sprites_destroy(game, game->sprite->player_R);
+		sprites_destroy(game, game->sprite->player_L);
 		free(game->sprite->collect);
 		free(game->sprite->total_c);
 		free(game->sprite->moves);

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   so_long.c                                          :+:      :+:    :+:   */
+/*   so_long_bonus.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mshershe <mshershe@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 21:15:49 by mshershe          #+#    #+#             */
-/*   Updated: 2025/02/22 00:26:40 by mshershe         ###   ########.fr       */
+/*   Updated: 2025/02/22 06:11:26 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,10 @@ void	update_map(char **map, int key, t_vars *game)
 	get_pos(map, 'P', &i, &j);
 	if (i < 0 && j < 0)
 		get_pos(map, 'D', &i, &j);
+	if (i < 0 && j < 0)
+		get_pos(map, 'R', &i, &j);
+	if (i < 0 && j < 0)
+		get_pos(map, 'L', &i, &j);
 	if (i >= 0 && j >= 0)
 		moved = keys(game, key, i, j);
 	if (*(game->sprite->collect) == *(game->sprite->total_c))

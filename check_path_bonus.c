@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   check_path.c                                       :+:      :+:    :+:   */
+/*   check_path_bonus.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mshershe <mshershe@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 00:10:41 by mshershe          #+#    #+#             */
-/*   Updated: 2025/02/21 23:30:18 by mshershe         ###   ########.fr       */
+/*   Updated: 2025/02/22 01:58:46 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	floodfill(char **map, int x, int y)
 		return ;
 	if (y >= (int)(ft_strlen(*map)))
 		return ;
-	if (map[x][y] == '1')
+	if (map[x][y] == '1' || map[x][y] == 'N')
 		return ;
 	else
 	{
@@ -111,7 +111,7 @@ int	check_elements(char	**map)
 		while (j < ft_strlen(map[i]))
 		{
 			if (map[i][j] != '1' && map[i][j] != '0' && map[i][j] != 'P' \
-				&& map[i][j] != 'C' && map[i][j] != 'E')
+				&& map[i][j] != 'C' && map[i][j] != 'E' && map[i][j] != 'N')
 				exit_game(2, map);
 			j++;
 		}
