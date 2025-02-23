@@ -6,7 +6,7 @@
 /*   By: mshershe <mshershe@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 02:49:32 by mshershe          #+#    #+#             */
-/*   Updated: 2025/02/22 06:33:27 by mshershe         ###   ########.fr       */
+/*   Updated: 2025/02/23 04:44:54 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,13 +79,11 @@ int	check_outline(char	**map)
 void	check_cutoff(char	*map)
 {
 	int	i;
-	int	j;
 
 	if (map == NULL)
 		exit_game(-1, NULL);
 	i = 0;
-	j = ft_strlen(map);
-	if (map[0] == '\n' || (j > 0 && map[j - 1] == '\n'))
+	if (map[0] == '\n')
 	{
 		free(map);
 		exit_game(4, NULL);

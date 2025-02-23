@@ -17,7 +17,7 @@ OBJ_BNS = $(addprefix $(OBJ_DIR)/, $(BNS:.c=.o))
 
 all: $(NAME)
 
-$(NAME):| libft $(OBJ_SRC)
+$(NAME):| libft $(OBJ_SRC) 
 	$(CC) $(CFLAGS) $(OBJ_SRC) -o $(NAME) -L$(LFTDIR) -lft  -Lminilibx-linux -lmlx -lXext -lX11 -Iminilibx-linux
 
 $(OBJ_DIR)/%.o: %.c

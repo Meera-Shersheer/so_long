@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_map_bonus.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mshershe <mshershe@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mshershe <mshershe@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/16 02:38:50 by mshershe          #+#    #+#             */
-/*   Updated: 2025/02/22 16:52:19 by mshershe         ###   ########.fr       */
+/*   Updated: 2025/02/23 04:36:13 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,25 +57,25 @@ void	exit_game(int code, char **map)
 {
 	write(2, "Error\n", 6);
 	if (code == 0)
-		ft_putendl_fd("The file extension is incorrect\n", 2);
+		ft_putendl_fd("The file extension is incorrect", 2);
 	if (code == 1)
 		perror("Error opening file ");
 	if (code == 2)
-		ft_putendl_fd("The map is Invalid\n", 2);
+		ft_putendl_fd("The map is Invalid", 2);
 	if (code == 3)
-		ft_putendl_fd("The map is not fully surrounded by walls\n", 2);
+		ft_putendl_fd("The map is not fully surrounded by walls", 2);
 	if (code == 4)
-		ft_putendl_fd("The map is cut\n", 2);
+		ft_putendl_fd("The map is cut", 2);
 	if (code == 5)
-		ft_putendl_fd("Invalid path\n", 2);
+		ft_putendl_fd("Invalid path", 2);
 	if (code == 6)
 		perror("MiniLibX initialization failed! ");
 	if (code == 7)
 		perror("Window creation failed! ");
 	if (code == 8)
-		ft_putendl_fd("the input is null\n", 2);
+		ft_putendl_fd("the input is null", 2);
 	if (code == 9)
-		ft_putendl_fd("missing sprite's file\n", 2);
+		ft_putendl_fd("missing sprite's file", 2);
 	if (map != NULL)
 		ft_free(map);
 	exit (1);

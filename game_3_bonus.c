@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   game_3_bonus.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mshershe <mshershe@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mshershe <mshershe@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 06:06:24 by mshershe          #+#    #+#             */
-/*   Updated: 2025/02/22 16:59:35 by mshershe         ###   ########.fr       */
+/*   Updated: 2025/02/23 06:18:17 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,12 +47,30 @@ void	render_game(char **map, t_vars *game, int moved)
 	}
 }
 
-void	destoy_mlx(t_vars *game)
+void	destroy_mlx(t_vars *game)
 {
 	if (!game->win)
 	{
 		mlx_destroy_display(game->mlx);
 		free(game->mlx);
 		exit_game(7, game->map);
+	}
+}
+
+void	check_size(t_vars *game, char **map)
+{
+	int	x;
+	int	y;
+
+	x = 0;
+	y = 0;
+	mlx_get_screen_size(game->mlx, &x, &y);
+	if (y < (32 * (int)ft_strlen_d(map)))
+	{
+		destroy_mlx(game);
+	}
+	if (x < (32 * (int)ft_strlen((map)[0])))
+	{
+		destroy_mlx(game);
 	}
 }

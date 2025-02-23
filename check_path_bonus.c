@@ -6,7 +6,7 @@
 /*   By: mshershe <mshershe@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 00:10:41 by mshershe          #+#    #+#             */
-/*   Updated: 2025/02/22 01:58:46 by mshershe         ###   ########.fr       */
+/*   Updated: 2025/02/23 04:42:45 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ char	**cpy_matrix(char	**map)
 	return (map_cpy);
 }
 
-char	**check_invalid_path(char	**map)
+char	**check_invalid_path(char	**map, t_vars *game)
 {
 	int		x;
 	int		y;
@@ -58,21 +58,25 @@ char	**check_invalid_path(char	**map)
 
 	y = 0;
 	x = 0;
+	check_size(game, map);
 	map_cpy = cpy_matrix(map);
 	get_pos(map, 'P', &x, &y);
 	floodfill(map_cpy, x, y);
 	if (element_counter(map_cpy, 'C') != 0)
 	{
 		ft_free(map);
+		mlx_destroy_display(game->mlx);
+		free(game->mlx);
 		exit_game(5, map_cpy);
 	}
 	if (element_counter(map_cpy, 'E') != 0)
 	{
 		ft_free(map);
+		mlx_destroy_display(game->mlx);
+		free(game->mlx);
 		exit_game(5, map_cpy);
 	}
-	ft_free(map_cpy);
-	return (NULL);
+	return (ft_free(map_cpy), NULL);
 }
 
 void	get_pos(char **map, char element, int *i, int *j)
