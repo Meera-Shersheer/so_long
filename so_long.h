@@ -78,7 +78,7 @@ void			check_cutoff(char *map);
 int				element_counter(char **map, char element);
 void			floodfill(char **map, int x, int y);
 char			**cpy_matrix(char **map);
-char	**check_invalid_path(char	**map, t_vars *game);
+char			**check_invalid_path(char **map, t_vars *game);
 void			get_pos(char **map, char element, int *i, int *j);
 void			load_image(t_vars *game, char **map, t_sprites *sprites);
 void			resize_image(t_vars *game, t_image *img, int new_hight,
@@ -111,5 +111,5 @@ int				enemy_move(char **map, int i, int j);
 void			fix_direction(int direction, int *i, int *j);
 int				move_2(char **map, int i, int j, int direction);
 void			destroy_mlx(t_vars *game);
-void	check_size(t_vars *game, char **map);
+void			check_size(t_vars *game, char **map);
 #endif

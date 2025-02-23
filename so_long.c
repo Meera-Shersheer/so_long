@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   so_long.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mshershe <mshershe@student.42amman.com>    +#+  +:+       +#+        */
+/*   By: mshershe <mshershe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 21:15:49 by mshershe          #+#    #+#             */
-/*   Updated: 2025/02/23 04:03:59 by mshershe         ###   ########.fr       */
+/*   Updated: 2025/02/23 17:30:15 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	main(int argc, char **argv)
 	game.mlx = mlx_init();
 	if (!game.mlx)
 		exit_game(6, game.map);
-	check_invalid_path(game.map, &game);	
+	check_invalid_path(game.map, &game);
 	game.win_hight = ft_strlen_d(game.map) * 32;
 	game.win_width = ft_strlen(*(game.map)) * 32;
 	game.win = mlx_new_window(game.mlx, game.win_width, \

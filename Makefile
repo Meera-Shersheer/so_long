@@ -4,7 +4,8 @@ game_bonus.c game_2_bonus.c game_3_bonus.c images_handling_2_bonus.c
 
 NAME = so_long
 CC= cc
-CFLAGS= -Wall -Wextra -Werror -g3
+CFLAGS= -Wall -Wextra -Werror
+#-g3 -fsanitize=address -g
 BNS_NAME = so_long
 #PATH LIB
 LFTDIR= ./Libft
@@ -17,7 +18,7 @@ OBJ_BNS = $(addprefix $(OBJ_DIR)/, $(BNS:.c=.o))
 
 all: $(NAME)
 
-$(NAME):| libft $(OBJ_SRC) 
+$(NAME): $(OBJ_SRC) | libft
 	$(CC) $(CFLAGS) $(OBJ_SRC) -o $(NAME) -L$(LFTDIR) -lft  -Lminilibx-linux -lmlx -lXext -lX11 -Iminilibx-linux
 
 $(OBJ_DIR)/%.o: %.c
@@ -31,7 +32,7 @@ clean:
 	@rm -rf $(OBJ_SRC) $(OBJ_DIR)
 	@$(MAKE) -sC $(LFTDIR) clean
 
-bonus:| libft $(OBJ_BNS)
+bonus: $(OBJ_BNS)| libft 
 	$(CC) $(CFLAGS) $(OBJ_BNS) -o $(BNS_NAME) -L$(LFTDIR) -lft  -Lminilibx-linux -lmlx -lXext -lX11 -Iminilibx-linux
 
 fclean: clean
