@@ -6,7 +6,7 @@
 /*   By: mshershe <mshershe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 02:38:01 by mshershe          #+#    #+#             */
-/*   Updated: 2025/02/22 20:26:49 by mshershe         ###   ########.fr       */
+/*   Updated: 2025/02/22 15:56:27 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,18 +16,18 @@ void	load_image( t_vars	*game, char **map, t_sprites *sprites)
 {
 	int	dim;
 
-	dim = 32;
+	dim = 40;
 	if (!game || !(game->mlx) || !sprites)
-		exit_game(8, map, game);
+		exit_game(8, map);
 	sprites_init(sprites, map);
 	if (!(sprites->door_player) || !(sprites->door_open))
-		exit_game(8, map, game);
+		exit_game(8, map);
 	if (!(sprites->wall) || !(sprites->ground) || !(sprites->enemy_l))
-		exit_game(8, map, game);
+		exit_game(8, map);
 	if (!(sprites->collectable) || !(sprites->exit) || !(sprites->player))
-		exit_game(8, map, game);
+		exit_game(8, map);
 	if (!(sprites->player_r) || !(sprites->player_l) || !(sprites->enemy_r))
-		exit_game(8, map, game);
+		exit_game(8, map);
 	load_xpms(game, sprites, dim);
 	load_resized_image(game, map, sprites);
 }
@@ -76,7 +76,7 @@ void	check_images(t_vars	*game)
 	{
 		fd = open(images[i], O_RDONLY);
 		if (fd < 0)
-			exit_game(9, game->map, game);
+			exit_game(9, game->map);
 		close (fd);
 		i++;
 	}
@@ -86,17 +86,17 @@ void	load_resized_image( t_vars	*game, char **map, t_sprites *sprites)
 {
 	int	dim;
 
-	dim = 32;
+	dim = 40;
 	if (!game || !(game->mlx) || !sprites)
-		exit_game(8, map, game);
+		exit_game(8, map);
 	if (!(sprites->door_player) || !(sprites->door_open))
-		exit_game(8, map, game);
+		exit_game(8, map);
 	if (!(sprites->wall) || !(sprites->ground) || !(sprites->player_r))
-		exit_game(8, map, game);
+		exit_game(8, map);
 	if (!(sprites->collectable) || !(sprites->exit) || !(sprites->player))
-		exit_game(8, map, game);
+		exit_game(8, map);
 	if (!(sprites->enemy_l) || !(sprites->player_l) || !(sprites->enemy_r))
-		exit_game(8, map, game);
+		exit_game(8, map);
 	resize_image(game, sprites->collectable, dim, dim);
 	resize_image(game, sprites->exit, dim, dim);
 	resize_image(game, sprites->ground, dim, dim);

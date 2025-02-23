@@ -6,13 +6,13 @@
 /*   By: mshershe <mshershe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 06:06:24 by mshershe          #+#    #+#             */
-/*   Updated: 2025/02/22 20:19:10 by mshershe         ###   ########.fr       */
+/*   Updated: 2025/02/22 16:59:35 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-int	element_counter(char **map, char element, t_vars *game)
+int	element_counter(char **map, char element)
 {
 	int		counter;
 	size_t	i;
@@ -22,7 +22,7 @@ int	element_counter(char **map, char element, t_vars *game)
 	j = 0;
 	counter = 0;
 	if (map == NULL || *map == NULL)
-		exit_game(-1, NULL, game);
+		exit_game(-1, NULL);
 	while (i < ft_strlen_d(map))
 	{
 		j = 0;
@@ -47,27 +47,12 @@ void	render_game(char **map, t_vars *game, int moved)
 	}
 }
 
-void	destroy_mlx(t_vars *game)
+void	destoy_mlx(t_vars *game)
 {
-	exit_game(7, NULL, game);
-}
-
-void	check_size(t_vars *game, char **map)
-{
-	int	x;
-	int	y;
-
-	x = 0;
-	y = 0;
-	mlx_get_screen_size(game->mlx, &x, &y);
-	if (y < (32 * (int)ft_strlen_d(map)))
+	if (!game->win)
 	{
-		ft_free(map);
-		destroy_mlx(game);
-	}
-	if (x < (32 * (int)ft_strlen((map)[0])))
-	{
-		ft_free(map);
-		destroy_mlx(game);
+		mlx_destroy_display(game->mlx);
+		free(game->mlx);
+		exit_game(7, game->map);
 	}
 }

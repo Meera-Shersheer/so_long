@@ -6,13 +6,13 @@
 /*   By: mshershe <mshershe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/16 02:38:50 by mshershe          #+#    #+#             */
-/*   Updated: 2025/02/22 20:30:19 by mshershe         ###   ########.fr       */
+/*   Updated: 2025/02/22 16:52:19 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-char	*read_map(t_vars *game, char *map_name)
+char	*read_map(char *map_name)
 {
 	int		fd;
 	char	*line;
@@ -20,10 +20,10 @@ char	*read_map(t_vars *game, char *map_name)
 
 	fd = open(map_name, O_RDONLY);
 	if (fd == -1)
-		exit_game(1, NULL, game);
+		exit_game(1, NULL);
 	map = ft_strdup("");
 	if (map == NULL)
-		exit_game(-1, NULL, game);
+		exit_game(-1, NULL);
 	while (1)
 	{
 		line = get_next_line(fd);
@@ -31,17 +31,14 @@ char	*read_map(t_vars *game, char *map_name)
 			break ;
 		map = gnl_strjoin(map, line);
 		if (map == NULL)
-		{
-			free(line);
-			exit_game(-1, NULL, game);
-		}
+			exit_game(-1, NULL);
 		free (line);
 	}
 	close (fd);
 	return (map);
 }
 
-char	**transform_into_matrix(t_vars *game, char *map, char **map_matrix)
+char	**transform_into_matrix(char *map, char **map_matrix)
 {
 	if (map == NULL)
 		return (NULL);
@@ -50,13 +47,13 @@ char	**transform_into_matrix(t_vars *game, char *map, char **map_matrix)
 	if (map_matrix == NULL)
 	{
 		free (map);
-		exit_game(-1, map_matrix, game);
+		exit_game(-1, map_matrix);
 	}
 	free (map);
 	return (map_matrix);
 }
 
-void	exit_game(int code, char **map,t_vars *game)
+void	exit_game(int code, char **map)
 {
 	write(2, "Error\n", 6);
 	if (code == 0)
@@ -81,11 +78,6 @@ void	exit_game(int code, char **map,t_vars *game)
 		ft_putendl_fd("missing sprite's file\n", 2);
 	if (map != NULL)
 		ft_free(map);
-	if(game)
-	{
-		mlx_destroy_display(game->mlx);
-		free(game->mlx);
-	}
 	exit (1);
 }
 

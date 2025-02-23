@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   game.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mshershe <mshershe@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mshershe <mshershe@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 03:52:42 by mshershe          #+#    #+#             */
-/*   Updated: 2025/02/22 20:19:51 by mshershe         ###   ########.fr       */
+/*   Updated: 2025/02/22 04:06:17 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ t_image	*load_img_to_win(t_sprites *sprites, char **map, size_t x, size_t y)
 		return (NULL);
 }
 
-int	element_counter(char **map, char element, t_vars *game)
+int	element_counter(char **map, char element)
 {
 	int		counter;
 	size_t	i;
@@ -104,7 +104,7 @@ int	element_counter(char **map, char element, t_vars *game)
 	j = 0;
 	counter = 0;
 	if (map == NULL || *map == NULL)
-		exit_game(-1, NULL, game);
+		exit_game(-1, NULL);
 	while (i < ft_strlen_d(map))
 	{
 		j = 0;

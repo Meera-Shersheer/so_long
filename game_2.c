@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   game_2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mshershe <mshershe@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mshershe <mshershe@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 16:54:26 by mshershe          #+#    #+#             */
-/*   Updated: 2025/02/22 20:18:04 by mshershe         ###   ########.fr       */
+/*   Updated: 2025/02/23 04:07:04 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,12 @@
 
 void	destroy_mlx(t_vars *game)
 {
-	exit_game(7, NULL, game);
+	if (!game->win)
+	{
+		mlx_destroy_display(game->mlx);
+		free(game->mlx);
+		exit_game(7, NULL);
+	}
 }
 
 void	check_size(t_vars *game, char **map)
