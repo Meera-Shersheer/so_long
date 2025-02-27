@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   so_long.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mshershe <mshershe@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mshershe <mshershe@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 21:15:49 by mshershe          #+#    #+#             */
-/*   Updated: 2025/02/23 17:30:15 by mshershe         ###   ########.fr       */
+/*   Updated: 2025/02/27 19:59:09 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int	main(int argc, char **argv)
 	load_image(&game, game.map, game.sprite);
 	load_data(&game, game.sprite, game.map);
 	draw_map(&game, game.sprite, game.map);
-	mlx_key_hook(game.win, hooks, &game);
+	mlx_hook(game.win, 2, 1L << 0, hooks, &game);
 	mlx_hook(game.win, 17, 0, close_window, &game);
 	mlx_loop(game.mlx);
 }
